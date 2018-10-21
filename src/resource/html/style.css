@@ -68,10 +68,19 @@ float: left;
 	color:black;
 	cursor: pointer;
 	border: solid 2px black;
+	border-radius: 50px;
 
 }
 
 .signup{
-    margin: 0.5% 0% 30% 80%;
-    color:rgb(170,113,57);
+	/*margin: 0px 0px 400px 500px;
+	padding: 1% 2% 1% 2%;
+    /*margin: 1% 0% 30% 80%;*/
+    display: inline;
+    position: absolute;
+    top : 28%;
+    left : 80%;
+	font-size: 20px;
+	color:rgb(170,113,57);
+	cursor: pointer;
 }
