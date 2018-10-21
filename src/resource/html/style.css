@@ -1,0 +1,77 @@
+ header{
+ 	padding : 8px 0px 40px 40px;
+ 	background: black;border: solid 2px black;
+ 	height :40px;
+ 	color: white;
+ }
+
+ header h1 {
+ 	margin: 0px; float :left;
+  text-align: left;color :white;
+  font-family: Algerian;font-size: 50px;
+  margin-left: 0px;
+ }
+body {
+  margin : 0; 
+}
+nav ul {
+	display: inline;
+	padding: 0px;
+	float :left;
+}
+nav ul li{
+  display : inline-block;
+  list-style-type: none;
+  margin-left: 20px;
+  color: white;
+  padding-bottom: 30px;
+  text-align: center;
+}
+nav ul li a{
+color : white;
+text-decoration: none;
+float: left;
+}
+
+#nav{
+	margin-top: 30px;
+	text-align: center;
+	font-size: 20px;
+	padding-bottom: 20px;
+}
+
+/*.homered{
+
+	background-color: red;
+	padding: 0px 10px 16px 10px;
+}*/
+
+.divider{
+	background-color: red;
+	height: 5px;
+}
+.imgebck{
+	background-image: url(images/chocolate-delicious-dessert-574111.jpg);
+	width: 1500px;
+	height: 700px;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+}
+
+.buttonhome{
+    font-family: Calibri;
+	margin: 0% 0% 30% 80%;
+	padding: 1% 2% 1% 2%;
+	background-color: rgb(170,113,57);
+	font-size: 20px;
+	color:black;
+	cursor: pointer;
+	border: solid 2px black;
+
+}
+
+.signup{
+    margin: 0.5% 0% 30% 80%;
+    color:rgb(170,113,57);
+}
