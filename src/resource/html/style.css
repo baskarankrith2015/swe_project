@@ -85,3 +85,51 @@ float: left;
 	color:rgb(170,113,57);
 	cursor: pointer;
 }
+
+.Page2{
+
+	background-image: url(images/blueberries-1867398_1920.jpg);
+	background-repeat: no-repeat;
+	background-size: 100%;
+
+}
+
+.page2header{
+
+	color : white;
+	font-size: 50px;
+	text-align: center;
+}
+
+
+.Class-signup{
+
+    text-align: center;
+	font-family: Calibri;
+	/*margin : 200px 0px 0px 0px;*/
+	padding: 1% 2% 1% 2%;
+	font-size: 20px;
+	color:black;
+}
+
+#signuppage{
+ 
+   width : 30%;
+   height : 70%;
+   background-color: black;
+   opacity: 0.5;
+   padding : 200px 0px 50px 0px;
+   /*margin : 0px 150px 150px 0px;*/
+   position:absolute;
+   bottom:50%
+   center:50%;
+   text-align: center;
+
+}
+
+#button{
+
+	width: 250px;
+	padding:10px;
+	border-radius:5px; 
+}
