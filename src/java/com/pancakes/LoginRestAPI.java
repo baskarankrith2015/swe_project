@@ -2,6 +2,7 @@ package com.pancakes;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,8 +87,11 @@ public class LoginRestAPI {
 
             }
             else {
-                Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("User already exists")
+
+                NewCookie newCookie= new NewCookie ("session_cookie",checkUser.getUserId()+System.currentTimeMillis());
+                Response.status(Response.Status.OK)
+                        .cookie(newCookie)
+                        .entity("User logged in")
                         .build();
             }
         }
