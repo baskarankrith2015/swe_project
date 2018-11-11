@@ -66,12 +66,12 @@ float: left;
 	position: absolute;
 	top : 75%;
     left : 70%;
-	background-color: rgb(170,113,57);
+	/*background-color: rgb(170,113,57);*/
 	font-size: 20px;
-	color:black;
+	color:rgb(170,113,57);
 	cursor: pointer;
-	border: solid 2px black;
-	border-radius: 50px;
+	/*border: solid 2px black;
+	border-radius: 80px;*/
 
 
 }
@@ -111,6 +111,8 @@ float: left;
     text-align: center;
 	font-family: Calibri;
 	/*margin : 200px 0px 0px 0px;*/
+	position: absolute;
+	top : 30%;
 	padding: 1% 2% 1% 2%;
 	font-size: 20px;
 	color:black;
@@ -239,4 +241,14 @@ th,td{
    border: solid 2px black;
 
 
+}
+
+.header2{
+
+	position: absolute;
+	top:10%;
+	left: 30%;
+	text-align: left;
+	color: black;
+	font-size: 50px;
 }
