@@ -3,6 +3,7 @@ package com.pancakes;
 /**
  * Created by krithikabaskaran on 10/19/18.
  */
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,7 +21,8 @@ import javax.ws.rs.core.MediaType;
 //Sets the path to base URL + /hello
 @Path("/hello")
 public class HelloServlet {
-private HtmlFileReader htmlFileReader= new HtmlFileReader();
+    private HtmlFileReader htmlFileReader = new HtmlFileReader();
+
     // This method is called if TEXT_PLAIN is request
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -41,8 +43,8 @@ private HtmlFileReader htmlFileReader= new HtmlFileReader();
     public String sayHtmlHello() {
         try {
             return htmlFileReader.readFile("src/resource/hello.html");
-        }catch (Exception e){
-            return "Something went wrong"+e.getMessage();
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
         }
         //return "<html> " + "<title>" + "Hello Jersey html" + "</title>"
         //        + "<body><h1>" + "Hello Jersey html" + "</body></h1>" + "</html> ";
