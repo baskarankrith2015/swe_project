@@ -1,4 +1,11 @@
- header{
+html, body, {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+header{
  	padding : 8px 0px 40px 40px;
  	background: black;border: solid 2px black;
  	height :40px;

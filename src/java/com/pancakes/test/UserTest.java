@@ -1,8 +1,6 @@
 package com.pancakes.test;
 
-import com.pancakes.LoginRestAPI;
-import com.pancakes.PasswordUtils;
-import com.pancakes.User;
+import com.pancakes.*;
 import org.junit.Test;
 
 import java.sql.SQLException;
@@ -47,4 +45,25 @@ public class UserTest {
         boolean res = passwordUtils.verifyUserPassword(password, encryptedPassword);
         assert (res);
     }
+
+    @Test
+    public void tst(){
+        PanCake panCake= new PanCake("dd");
+        panCake.setOrderId("o");
+        panCake.setCreationTimestamp(System.currentTimeMillis());
+        String sql="Insert into pancake ( pancake_id,strawberry,blueberry ,order_id,creation_timestamp) VALUES ("
+                +"\""+panCake.getPanCakeId() +"\""+","+"\""+panCake.isStrawberrySauce() +"\""+","+"\""+panCake.isBlueberrySauce()+"\""+","+"\""+panCake.getOrderId()+"\""+
+                ","+"\""+panCake.getCreationTimestamp()+"\""+ ")";
+        System.out.println(sql);
+    }
+
+
+    @Test
+    public void ordrtst() {
+        Order order= new Order(UUID.randomUUID().toString());
+        String sql = "Insert into order (order_id,user_id,creation_timestamp) VALUES ("
+                + "\"" + order.getOrderID() + "\"" + "," + "\"" + order.getUserID() + "\"" + "," + "\"" + order.getCreationTimestamp() + "\"" + ")";
+        System.out.println(sql);
+    }
 }
+
