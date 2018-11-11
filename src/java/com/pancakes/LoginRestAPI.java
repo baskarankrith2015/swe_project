@@ -12,9 +12,11 @@ import java.sql.SQLException;
  * Created by krithikabaskaran on 10/21/18.
  */
 
-//Sets the path to base URL + /hello
+
 @Path("/user")
 public class LoginRestAPI {
+    private Session session=new Session();
+
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
 
     private static PasswordUtils passwordUtils= new PasswordUtils();
@@ -43,8 +45,11 @@ public class LoginRestAPI {
             createUser(userId, userName, password);
             try {
                 User newUser = readUser(userId);
+                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
                 return Response.status(Response.Status.OK)
                         .entity(newUser)
+                        .cookie(newCookie)
+
                         .build();
             } catch (SQLException e) {
                 Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -88,8 +93,9 @@ public class LoginRestAPI {
             }
             else {
 
-                NewCookie newCookie= new NewCookie ("session_cookie",checkUser.getUserId()+System.currentTimeMillis());
-                Response.status(Response.Status.OK)
+
+                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
+     Response.status(Response.Status.OK)
                         .cookie(newCookie)
                         .entity("User logged in")
                         .build();
@@ -123,7 +129,5 @@ public class LoginRestAPI {
        returnClass.close();
         return user;
     }
-
-
 
 }
