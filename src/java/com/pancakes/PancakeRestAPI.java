@@ -27,11 +27,18 @@ public class PancakeRestAPI {
     public Response createOrderRestApi(@FormParam("plain") final Integer plainItems,
                                       @FormParam("strawberry") final Integer strawberryItems,
                                       @FormParam("blueberry") final Integer blueberryItems,
-                                     @CookieParam("session_cookie") Cookie cookie) throws SQLException {
+                                     @CookieParam("session_cookie") Cookie cookie)  {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
-        User user=loginRestAPI.readUser(userId);
+        User user= null;
+        try {
+            user = loginRestAPI.readUser(userId);
+        } catch (SQLException e) {
+            Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("User doesn't exist")
+                    .build();
+        }
         if(user==null){
             Response.status(Response.Status.UNAUTHORIZED)
                     .entity("Wrong credentials")
@@ -63,7 +70,7 @@ public class PancakeRestAPI {
         writeOrder(order);
       return  Response.status(Response.Status.OK)
               .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-              .entity("Order placed")
+              .entity(order)
               .build();
     }
     @POST
@@ -73,12 +80,20 @@ public class PancakeRestAPI {
     public Response addOrderRestApi(@FormParam("plain") final Integer plainItems,
                                       @FormParam("strawberry") final Integer strawberryItems,
                                       @FormParam("blueberry") final Integer blueberryItems,
-                                      @CookieParam("session_cookie") Cookie cookie) {
+                                      @CookieParam("session_cookie") Cookie cookie,
+                                    @PathParam("orderID") String orderId) {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
 
-        Order order =new Order(UUID.randomUUID().toString());
+        Order order = null;
+        try {
+            order = getOrder(orderId).get(0);
+        } catch (SQLException e) {
+            Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Something went wrong"+e.getMessage()   )
+                    .build();
+        }
         for(int i=0; i<plainItems; i++) {
             PanCake panCake = new PanCake(UUID.randomUUID().toString());
             panCake.setCreationTimestamp(System.currentTimeMillis());
@@ -101,10 +116,10 @@ public class PancakeRestAPI {
         }
         order.setCreationTimestamp(System.currentTimeMillis());
         order.setUserID(userId);
-        //writeOrder(order);
+        writeOrder(order);
         return  Response.status(Response.Status.OK)
                 .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-                .entity("Order added")
+                .entity(order)
                 .build();
     }
 
@@ -128,14 +143,17 @@ public class PancakeRestAPI {
             List<PanCake> blueberryList = getBlueberryPancakesInAOrder(orderUUID);
             deleteItemsinOrder(blueberryList,blueberryItems);
         } catch (SQLException e) {
-            e.printStackTrace();
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    //.cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                    .entity("There was an error in getting the order "+e.getMessage())
+                    .build();
         }
 
 
 
         return  Response.status(Response.Status.OK)
                 .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-                .entity("Order added")
+                .entity("Order deleted")
                 .build();
     }
 
@@ -148,10 +166,18 @@ public class PancakeRestAPI {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
-        deleteOrder(orderUUID);
+        List<Order>orderList;
+        try {
+        orderList= getOrder(orderUUID);
+        } catch (SQLException e) {
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    //.cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                    .entity("There was an error in getting the order "+e.getMessage())
+                    .build();
+        };
         return  Response.status(Response.Status.OK)
                 .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-                .entity("Order added")
+                .entity(orderList)
                 .build();
     }
     @DELETE
@@ -166,7 +192,7 @@ public class PancakeRestAPI {
         deleteOrder(orderUUID);
         return  Response.status(Response.Status.OK)
                 .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-                .entity("Order added")
+                .entity("Order deleted")
                 .build();
     }
     private void deleteItemsinOrder(List<PanCake> plainList,int items) {

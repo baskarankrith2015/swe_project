@@ -93,7 +93,7 @@ public class LoginRestAPI {
                 NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
                 Response.status(Response.Status.OK)
                         .cookie(newCookie)
-                        .entity("User logged in")
+                        .entity(checkUser)
                         .build();
             }
         }
