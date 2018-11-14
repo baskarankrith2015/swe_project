@@ -31,9 +31,16 @@ public class PancakeRestAPI {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
-        User user=loginRestAPI.readUser(userId);
+        User user= null;
+        try {
+            user = loginRestAPI.readUser(userId);
+        } catch (SQLException e) {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("User doesn't exist")
+                    .build();
+        }
         if(user==null){
-            Response.status(Response.Status.UNAUTHORIZED)
+           return  Response.status(Response.Status.UNAUTHORIZED)
                     .entity("Wrong credentials")
                     .build();
         }

@@ -30,7 +30,6 @@ public class DatabaseAccess {
             //STEP 4: Execute a query
             System.out.println("Creating statement...");
             stmt = conn.createStatement();
-
             ResultSet rs = stmt.executeQuery(sql);
 
             //STEP 5: Extract data from result set

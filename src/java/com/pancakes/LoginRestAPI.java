@@ -37,7 +37,7 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(e)
                     .build();
         }
@@ -45,23 +45,22 @@ public class LoginRestAPI {
             createUser(userId, userName, password);
             try {
                 User newUser = readUser(userId);
-                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
+                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(newUser.getUserId()));
                 return Response.status(Response.Status.OK)
                         .entity(newUser)
                         .cookie(newCookie)
 
                         .build();
             } catch (SQLException e) {
-                Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                         .entity(e)
                         .build();
             }
         } else {
-            Response.status(Response.Status.UNAUTHORIZED)
+           return  Response.status(Response.Status.UNAUTHORIZED)
                     .entity("User already exists")
                     .build();
         }
-        return null;
     }
     @POST
     @Path("/login")
@@ -73,20 +72,20 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(e)
                     .build();
         }
         if (checkUser == null) {
 
-                Response.status(Response.Status.UNAUTHORIZED)
+               return  Response.status(Response.Status.UNAUTHORIZED)
                         .entity("Wrong credentials")
                         .build();
 
         } else {
             boolean verified = passwordUtils.verifyUserPassword(password, checkUser.password);
             if(!verified){
-                Response.status(Response.Status.UNAUTHORIZED)
+               return  Response.status(Response.Status.UNAUTHORIZED)
                         .entity("Wrong credentials")
                         .build();
 
@@ -95,13 +94,13 @@ public class LoginRestAPI {
 
 
                 NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
-     Response.status(Response.Status.OK)
+    return  Response.status(Response.Status.OK)
                         .cookie(newCookie)
                         .entity("User logged in")
                         .build();
             }
         }
-        return null;
+
     }
 
     public void createUser(String userId, String userName, String password) {
