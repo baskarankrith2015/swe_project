@@ -30,7 +30,7 @@ public class LoginRestAPI {
     @POST
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
     public String createUserRestApi(@FormParam("user_name") String userName,
                                       @FormParam("user_id") String userId,
                                       @FormParam("password") final String password) {
@@ -38,7 +38,7 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            return "";
+            return "r";
                    // Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
         }
         if (checkUser == null) {
@@ -50,13 +50,13 @@ public class LoginRestAPI {
 
 
             } catch (SQLException e) {
-                return "";
+                return "w";
                 //Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-           return  "";
+           return  "q";
                    //Response.status(Response.Status.UNAUTHORIZED).entity("User already exists").build();
         }
         return "Shit happened";
