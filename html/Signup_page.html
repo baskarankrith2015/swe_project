@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-   <title>Welcome to Yummy Pancakes</title>
+   <title>Signup Page</title>
       <!--link rel="stylesheet" type="text/css" href="style.css"-->
      <style>
       .Page1{
@@ -313,9 +313,9 @@ th,td{
 
      </style>
  </head>
- <body> 
- 	<header class = "Page1">
-      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
+<!--header class ="page2header"><i><b>SIGNUP HERE</b></i-->
+    <header class = "Page1">
+    <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -330,25 +330,27 @@ th,td{
               <li><a href="order_history_page.html">ORDER HISTORY</a></li>
             </ul>  
           </nav>
-  </header> 
+        <br>
+        <br>
+        <h2><a class = "page2header"><i><b>SIGNUP HERE</b></i></a></h2>
+    </header>
      <div class= "divider"></div>
-     
-    <!-- link to this page from the tracking_page when order number is not found-->
-     <div class="error">
-     <h2 style="font-size: 500%">ERROR FOUND</h2>
-     </div>
-     
-     <div class="error">
-     <p style="font-size: 200%;"> <b>AWW SNAP 😞<br>
-     <!-- The order number <i>insert_number</i> cannot be found!<br> -->
-         Please verify your login details and/order number and try again!</b><br></p>
-     </div>
-     
-     <!--a style="text-align: center; font-size: 150%;" href="main_page.html">GO BACK HOME</a-->
-     <button class ="buttonhome" onclick="window.location.href = 'main_page.html';">GO BACK HOME</button>
-     
-    <!--footer>
-     &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
-    </footer-->
- </body>
+   <body class ="Page2">
+    <div class = "Class-signup">
+        
+        <form action="/user/signup" method = "post">
+        <input type = "text" name= "user_name" id="button" placeholder="Enter your name" /><br><br>
+        <!--input type = "text" name= "lname" id="button" placeholder="Enter your last name"><br><br-->
+        <input type = "text" name= "user_id" id="button" placeholder="Enter your user id" /><br><br>
+        <input type = "password" name= "password" id="button" placeholder="Enter Password" /><br><br>
+        <!--input type = "password" name= "password" id="button" placeholder="Re-enter your Password"><br><br-->
+        <a href ="Menupage.html"><input type="button" id="button" value="Create Account" /></a><br><br>
+        <a href ="main_page.html"><input type="button" id="button" value="Return to Main Page" /></a><br><br>
+        </form>
+        <!--a href ="Menupage.html"><button onclick = "sign_in()">Sign-in</button></a-->
+        <!--a href ="main_page.html"><button>Return to MainPage</button></a-->
+        
+       </div>
+   </body>       
+
 </html>
