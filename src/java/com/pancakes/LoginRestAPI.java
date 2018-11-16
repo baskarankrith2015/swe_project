@@ -46,8 +46,7 @@ public class LoginRestAPI {
             try {
                 User newUser = readUser(userId);
                 NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(newUser.getUserId()));
-                return htmlFileReader.readFile("src/resource/html/Menupage.html");
-
+                return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(newUser.getUserId()));
 
             } catch (SQLException e) {
                 return "w";
@@ -87,7 +86,6 @@ public class LoginRestAPI {
                return  Response.status(Response.Status.UNAUTHORIZED)
                         .entity("Wrong credentials")
                         .build();
-
             }
             else {
 
