@@ -28,10 +28,13 @@
      <div class= "divider"></div>
    <body class ="Page2">
     <div class = "Class-signup">
-        <input type = "text" name= "fname" id="button" placeholder="Enter your first name"><br><br>
-        <input type = "text" name= "lname" id="button" placeholder="Enter your last name"><br><br>
+        <form action="/user/signup" method="POST">
+        <input type = "text" name= "user_name" id="button" placeholder="Enter your name"><br><br>
+        <input type = "text" name= "user_id" id="button" placeholder="Enter your user ID"><br><br>
         <input type = "password" name= "password" id="button" placeholder="Enter Password"><br><br>
-        <input type = "password" name= "password" id="button" placeholder="Re-enter your Password"><br><br>
+        <input type = "password" name= "pwd" id="button" placeholder="Re-enter your Password"><br><br>
+        <input type="submit" value="Submit">
+        </form>
         <a href ="Menupage.html"><button>Sign-in</button></a>
         <a href ="main_page.html"><button>Return to MainPage</button></a>
    </body>       
