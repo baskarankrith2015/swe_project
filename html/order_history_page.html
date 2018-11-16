@@ -2,7 +2,7 @@
 <html>
  <head>
    <title>Welcome to Yummy Pancakes</title>
-   <!--link rel="stylesheet" type="text/css" href="style.css"-->
+      <!--link rel="stylesheet" type="text/css" href="style.css"-->
      <style>
       .Page1{
  	padding : 8px 0px 40px 40px;
@@ -314,8 +314,8 @@ th,td{
      </style>
  </head>
  <body> 
- 	<header class ="Page1">
-      <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
+ 	<header class = "Page1">
+      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -331,29 +331,21 @@ th,td{
             </ul>  
           </nav>
   </header> 
-    <div class= "divider"></div> 
-      <table>
-        <tr>
-        <th><b>MENU</b></th>
-        <th><b>CALORIES</b></th> 
-        <th><b>PRICES</b></th>
-      </tr>
-      <tr>
-        <td>PLAIN PANCAKES</td>
-        <td>64 cal </td>
-        <td> $5 </td>
-      </tr>
-      <tr>
-        <td>STRAWBERRY PANCAKES</td>
-        <td>62 cal </td>
-        <td> $7 </td>
-      </tr>
-      <tr>
-        <td>BLUEBERRY PANCAKES</td>
-        <td>60 cal </td>
-        <td> $9 </td>
-      </tr>
-      </table> 
-      <a href ="Orderpage.html"><button class ="placeanorder"><b>PLACE AN ORDER</b></button></a>
+     <div class= "divider"></div>
+    
+     <!-- Call customer information HOW -->
+     <h4 style="font-size: 200%; font-family: fantasy">Active Orders for Customer <i style="color: red">insert_name</i> :</h4>
+     
+     <!-- include button for each order history mentioned -->
+     <button class ="editorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button>
+        
+     <!-- Call Results in Error, Customer Reference not found, lead to error page -->
+     <a href="error_page.html"></a>
+     
+      <img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;">
+    
+     <!--footer>
+     &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
+    </footer-->
  </body>
 </html>

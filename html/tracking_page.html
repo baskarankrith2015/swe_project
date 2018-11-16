@@ -2,7 +2,7 @@
 <html>
  <head>
    <title>Welcome to Yummy Pancakes</title>
-   <!--link rel="stylesheet" type="text/css" href="style.css"-->
+      <!--link rel="stylesheet" type="text/css" href="style.css"-->
      <style>
       .Page1{
  	padding : 8px 0px 40px 40px;
@@ -314,8 +314,8 @@ th,td{
      </style>
  </head>
  <body> 
- 	<header class ="Page1">
-      <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
+ 	<header class = "Page1">
+      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -331,29 +331,31 @@ th,td{
             </ul>  
           </nav>
   </header> 
-    <div class= "divider"></div> 
-      <table>
-        <tr>
-        <th><b>MENU</b></th>
-        <th><b>CALORIES</b></th> 
-        <th><b>PRICES</b></th>
-      </tr>
-      <tr>
-        <td>PLAIN PANCAKES</td>
-        <td>64 cal </td>
-        <td> $5 </td>
-      </tr>
-      <tr>
-        <td>STRAWBERRY PANCAKES</td>
-        <td>62 cal </td>
-        <td> $7 </td>
-      </tr>
-      <tr>
-        <td>BLUEBERRY PANCAKES</td>
-        <td>60 cal </td>
-        <td> $9 </td>
-      </tr>
-      </table> 
-      <a href ="Orderpage.html"><button class ="placeanorder"><b>PLACE AN ORDER</b></button></a>
+     <div class= "divider"></div>
+     
+     <p style="text-align: left; font-size: 200%; color: darkcyan; font-style: oblique; font-family: serif;">
+     <br>
+     Thank you for placing your order at Yummy Pancakes!<br>
+     Your order will be ready in 30 minutes.<br>
+         
+    <!--button type="button" onclick="loadDoc()">PLACE ORDER</button-->
+
+     <p id="orderID"></p>
+     
+     <p>Please provide your order number # <span id="document.getElementById('orderID').innerHTML = getOrderID();"></span> at the counter in the restaurant to pick-up your order.<br></p>
+     
+     <br>
+     <br>
+     <p style="text-align: left; font-size: 200%; color: darkcyan; font-style: oblique; font-family: serif;">If you would like to edit your order:</p><br>
+     <button class ="editorder" onclick="window.location.href = 'order_history_page.html';">EDIT ORDER</button>
+     
+     <!-- Call Results in Error, Customer Reference not found, lead to error page -->
+     <!--a href="error_page.html"></a-->
+     
+      <!--img src="images/stacks_of_pancakes.png" alt="Stacks of Pancakes" align="bottom" style="width:1460px;height:150px;"-->
+     
+    <!--footer>
+     &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
+    </footer-->
  </body>
 </html>
