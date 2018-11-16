@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
  <head>
-   <title>Welcome to Yummy Pancakes</title>
-   <!--link rel="stylesheet" type="text/css" href="style.css"-->
+   <title>Signup Page</title>
+      <!--link rel="stylesheet" type="text/css" href="style.css"-->
      <style>
       .Page1{
  	padding : 8px 0px 40px 40px;
@@ -313,9 +313,9 @@ th,td{
 
      </style>
  </head>
- <body> 
- 	<header class ="Page1">
-      <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
+<!--header class ="page2header"><i><b>SIGNUP HERE</b></i-->
+    <header class = "Page1">
+    <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -330,30 +330,27 @@ th,td{
               <li><a href="order_history_page.html">ORDER HISTORY</a></li>
             </ul>  
           </nav>
-  </header> 
-    <div class= "divider"></div> 
-      <table>
-        <tr>
-        <th><b>MENU</b></th>
-        <th><b>CALORIES</b></th> 
-        <th><b>PRICES</b></th>
-      </tr>
-      <tr>
-        <td>PLAIN PANCAKES</td>
-        <td>64 cal </td>
-        <td> $5 </td>
-      </tr>
-      <tr>
-        <td>STRAWBERRY PANCAKES</td>
-        <td>62 cal </td>
-        <td> $7 </td>
-      </tr>
-      <tr>
-        <td>BLUEBERRY PANCAKES</td>
-        <td>60 cal </td>
-        <td> $9 </td>
-      </tr>
-      </table> 
-      <a href ="Orderpage.html"><button class ="placeanorder"><b>PLACE AN ORDER</b></button></a>
- </body>
+        <br>
+        <br>
+        <h2><a class = "page2header"><i><b>SIGNUP HERE</b></i></a></h2>
+    </header>
+     <div class= "divider"></div>
+   <body class ="Page2">
+    <div class = "Class-signup">
+        
+        <form action="/user/signup" method = "post">
+        <input type = "text" name= "user_name" id="button" placeholder="Enter your name" /><br><br>
+        <!--input type = "text" name= "lname" id="button" placeholder="Enter your last name"><br><br-->
+        <input type = "text" name= "user_id" id="button" placeholder="Enter your user id" /><br><br>
+        <input type = "password" name= "password" id="button" placeholder="Enter Password" /><br><br>
+        <!--input type = "password" name= "password" id="button" placeholder="Re-enter your Password"><br><br-->
+        <a href ="Menupage.html"><input type="button" id="button" value="Create Account" /></a><br><br>
+        <a href ="main_page.html"><input type="button" id="button" value="Return to Main Page" /></a><br><br>
+        </form>
+        <!--a href ="Menupage.html"><button onclick = "sign_in()">Sign-in</button></a-->
+        <!--a href ="main_page.html"><button>Return to MainPage</button></a-->
+        
+       </div>
+   </body>       
+
 </html>
