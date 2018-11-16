@@ -5,14 +5,23 @@
    <link rel="stylesheet" type="text/css" href="style.css">
  </head>
  <body> 
- 	<header class ="Page1">
+    <script>
+    document.cookie="session-cookie=MARKER-COOKIE"
+    </script>
+ 	<header class ="Page1" style="padding : 8px 0px 40px 40px;
+ 	background: black;border: solid 2px black;
+ 	height :40px;
+ 	color: white;">
       <h1>Yummy Pancakes</h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
         </form> -->
           <nav>
-            <ul id = nav>
+            <ul id = nav style="margin-top: 30px;
+	text-align: center;
+	font-size: 20px;
+	padding-bottom: 20px;">
              <!-- <li><a href="#">LOGIN</a></li> -->
              <li><a href="Menupage.html">MENU</a></li>
               <li><a href="location_page.html">LOCATION</a></li>
@@ -21,9 +30,15 @@
               <li><a href="order_history_page.html">ORDER HISTORY</a></li>
             </ul>  
           </nav>
-        <h2 class="header2"><i>Please provide your order details below</i></h2>
+        <h2 class="header2" style="	position: absolute;
+	top:15%;
+	left: 30%;
+	text-align: left;
+	color: black;
+	font-size: 50px;"><i>Please provide your order details below</i></h2>
   </header> 
-    <div class= "divider"></div> 
+    <div class= "divider" style="background-color: red;
+	height: 5px;"></div> 
       <table>
         <tr>
         <th><b>MENU</b></th>
@@ -81,6 +96,15 @@
         </td>
       </tr>
       </table> 
-      <a href ="cart_page.html"><button class ="addtocart"><b>ADD TO CART</b></button></a>
+      <a href ="cart_page.html"><button class ="addtocart" style="	font-family: Calibri;
+	position: absolute;
+    left : 70%;
+    bottom: 5%;
+	background-color: grey;
+	font-size: 20px;
+	color:black;
+	cursor: pointer;
+	border: solid 2px black;
+"><b>ADD TO CART</b></button></a>
   </body>
 </html>
