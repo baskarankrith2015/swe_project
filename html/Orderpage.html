@@ -339,7 +339,7 @@ th,td{
       </tr>
       <tr>
         <td>PLAIN PANCAKES</td>
-        <td><select id = "dropdown">
+        <td><select id = "dropdown_PLAIN">
           <option> 0 </option>
           <option> 1 </option>
           <option> 2 </option>
@@ -356,7 +356,7 @@ th,td{
       </tr>
       <tr>
         <td>STRAWBERRY PANCAKES</td>
-        <td><select id = "dropdown">
+        <td><select id = "dropdown_STRAWBERRY">
           <option> 0 </option>
           <option> 1 </option>
           <option> 2 </option>
@@ -373,7 +373,7 @@ th,td{
       </tr>
       <tr>
         <td>BLUEBERRY PANCAKES</td>
-        <td><select id = "dropdown">
+        <td><select id = "dropdown_BLUEBERRY">
           <option> 0 </option>
           <option> 1 </option>
           <option> 2 </option>
@@ -390,5 +390,15 @@ th,td{
       </tr>
       </table> 
       <a href ="cart_page.html"><button class ="addtocart"><b>ADD TO CART</b></button></a>
+     @section scripts {
+     <script type="text/javascript">
+         $(document).ready(function () {
+             localStorage.setItem('dropdown_BLUEBERRY', $("#dropdown_BLUEBERRY").getSelection())
+             localStorage.setItem('dropdown_PLAIN', $("#dropdown_PLAIN").getSelection())
+             localStorage.setItem('dropdown_STRAWBERRY', $("#dropdown_STRAWBERRY").getSelection())
+         })
+     </script>
+     }
   </body>
 </html>
+
