@@ -358,28 +358,21 @@ th,td{
       </tr>
       </table> 
      <script type="text/javascript">
-        function httpGet(path)
+        function httpGet()
         {
             var xmlHttp = new XMLHttpRequest();
-            xmlHttp.open( "GET", path, false );
+            xmlHttp.open( "GET", "/order", false );
             var x = document.cookie;
-            var a=x.split('=');
+                var a=x.split('=');
             var y=a[1];
             xmlHttp.setRequestHeader("session-cookie",y);
             xmlHttp.send( null );
-            var  resp= xmlHttp.responseText;
             if (xmlHttp.status == 200){
-                document.clear();
-                while (document.firstChild) {
-            document.removeChild(document.firstChild);
-                    }
-                document.open();
-                document.write(resp);
-                document.close()
+                document.write(xmlHttp.responseText);
             }
         }
      </script>
-     <button type="button" onclick="httpGet('/order');">Click Me!</button>
+     <button type="button" onclick="httpGet();">Click Me!</button>
  
          
  </body>

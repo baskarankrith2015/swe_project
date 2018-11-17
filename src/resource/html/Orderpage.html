@@ -323,8 +323,6 @@ th,td{
 			localStorage.setItem('dropdown_PLAIN',$('#dropdown_PLAIN').value);
 			localStorage.setItem('dropdown_STRAWBERRY',$('#dropdown_STRAWBERRY').value);
 			localStorage.setItem('dropdown_BLUEBERRY',$('#dropdown_BLUEBERRY').value);
-            httpGet('/carts');
-            
 		}
 	</script>
  	<header class ="Page1">
@@ -402,8 +400,8 @@ th,td{
         </td>
       </tr>
       </table> 
-     <button class ="addtocart" onclick="SaveToLocalStorage();"><b>ADD TO CART</b></button>
-   <button type="button" onclick="SaveToLocalStorage();">Click Me!</button>
+      <a href ="cart_page.html"><button class ="addtocart" onclick="SaveToLocalStorage()"><b>ADD TO CART</b></button></a>
+  
   </body>
 </html>
 

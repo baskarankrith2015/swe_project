@@ -333,12 +333,13 @@ th,td{
   </header> 
   <div class= "divider"></div>  
     <div class="imgebck">
-      <form action = "localhost:8080" method = "post" id = "user_name">
+       <form action = "/user/login" method = "post" class ="buttonhome">
         <input type = "text" name= "fname" id="button" placeholder="Enter your user name"><br><br>
         <input type = "password" name= "password" id="button" placeholder="Enter your password"><br><br>
-          
-    <a class ="buttonhome" href="Menupage.html"><b>LOGIN</b></a>
-    <a class="signup" href="signup/">Create a Signup ?</a>
+        <input type ="submit" value="Login">
+        </form>
+    <form action="/signup" method ="get" class="signup">
+        <input type ="submit" value ="Create a signup?">
         </form>
       <!--<p><span> <b>TO GO Yummy Pancakes </b></span></p>
       <img src = "alexandra-kusper-538362-unsplash.jpg" />
