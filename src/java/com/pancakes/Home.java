@@ -54,12 +54,12 @@ public class Home {
             return "Something went wrong" + e.getMessage();
         }
     }
-    @Path("/cart")
+    @Path("/carts")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String serveCartPage( @CookieParam("session-cookie") Cookie cookie) {
+    public String serveCartPage( @HeaderParam("session-cookie") String cookie) {
         try {
-            String sessionVal=cookie.getValue();
+                String sessionVal=cookie;
             return htmlFileReader.readFile("src/resource/html/cart_page.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
