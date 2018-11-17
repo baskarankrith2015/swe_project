@@ -14,9 +14,6 @@ public class HtmlFileReader {
 
         String st;
         while ((st = br.readLine()) != null) {
-            if (st.contains("MARKER-COOKIE")) {
-                st = st.replace("MARKER-COOKIE", "krithika");
-            }
             stringBuffer.append(st);
         }
 

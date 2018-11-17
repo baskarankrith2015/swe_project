@@ -1,8 +1,7 @@
 package com.pancakes;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -38,7 +37,30 @@ public class Home {
     @Produces(MediaType.TEXT_HTML)
     public String serveSignupPage() {
         try {
-            return htmlFileReader.readFile("src/resource/html/Signup_Page.html");
+            return htmlFileReader.readFile("src/resource/html/Signup_page.html");
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
+
+    @Path("/order")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveOrderPage( @HeaderParam("session-cookie") String cookie) {
+        try {
+           String sessionVal=cookie;
+            return htmlFileReader.readFile("src/resource/html/Orderpage.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
+    @Path("/cart")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveCartPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/cart_page.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
         }

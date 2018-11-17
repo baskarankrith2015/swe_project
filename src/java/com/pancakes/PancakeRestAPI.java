@@ -27,7 +27,7 @@ public class PancakeRestAPI {
     public Response createOrderRestApi(@FormParam("plain") final Integer plainItems,
                                       @FormParam("strawberry") final Integer strawberryItems,
                                       @FormParam("blueberry") final Integer blueberryItems,
-                                     @CookieParam("session_cookie") Cookie cookie) throws SQLException {
+                                     @CookieParam("session-cookie") Cookie cookie) throws SQLException {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);

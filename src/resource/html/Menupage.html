@@ -357,7 +357,24 @@ th,td{
         <td> $9 </td>
       </tr>
       </table> 
-      <a href ="Orderpage.html"><button class ="placeanorder"><b>PLACE AN ORDER</b></button></a>
+     <script type="text/javascript">
+        function httpGet()
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "/order", false );
+            var x = document.cookie;
+                var a=x.split('=');
+            var y=a[1];
+            xmlHttp.setRequestHeader("session-cookie",y);
+            xmlHttp.send( null );
+            if (xmlHttp.status == 200){
+                document.write(xmlHttp.responseText);
+            }
+        }
+     </script>
+     <button type="button" onclick="httpGet();">Click Me!</button>
+ 
+         
  </body>
 </html>
 
