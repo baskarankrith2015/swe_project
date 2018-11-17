@@ -76,8 +76,8 @@ float: left;
 	/*margin: 0% 0% 30% 80%;
 	padding: 1% 2% 1% 2%;*/
 	position: absolute;
-	top : 80%;
-    left : 70%;
+	top : 30%;
+    left : 0%;
 	/*background-color: rgb(170,113,57);*/
 	font-size: 20px;
 	color:rgb(170,113,57);
@@ -323,7 +323,7 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-                           <li><a href="Menupage.html">MENU</a></li>
+              <li><a href="Menupage.html">MENU</a></li>
               <li><a href="location_page.html">LOCATION</a></li>
               <li><a href="tracking_page.html">TRACK ORDER</a></li>
               <li><a href="cart_page.html">CART</a></li>
@@ -333,13 +333,14 @@ th,td{
   </header> 
   <div class= "divider"></div>  
     <div class="imgebck">
-      <form action = "localhost:8080" method = "post" id = "user_name">
-        <input type = "text" name= "fname" id="button" placeholder="Enter your user name"><br><br>
-        <input type = "password" name= "password" id="button" placeholder="Enter your password"><br><br>
-          
-    <a class ="buttonhome" href="Menupage.html"><b>LOGIN</b></a>
-    <a class="signup" href="signup/">Create a Signup ?</a>
+      <form action="/user/login" method="POST" class = buttonhome>
+        <input type = "text" name= "user id" id="button" placeholder="User ID"><br><br>
+        <input type = "password" name= "password" id="button" placeholder="Password"><br><br>
+          <input type ="submit" value ="Login">
+          <input type ="submit" value ="Create a signup?">
         </form>
+    <!----<a class ="buttonhome" href="Menupage.html"><b>LOGIN</b></a>
+    <a class="signup" href="signup/">Create a Signup ?</a>
       <!--<p><span> <b>TO GO Yummy Pancakes </b></span></p>
       <img src = "alexandra-kusper-538362-unsplash.jpg" />
       <img src = "blueberries-1867398_1920.jpg"/>  -->
