@@ -315,7 +315,7 @@ th,td{
  </head>
  <body> 
      <script>
-     document.cookie = "session-cookie=MARKER-COOKIE"
+     document.cookie = "session-cookie=MARKER-COOKIE;path=/;"
      </script>
  	<header class ="Page1">
       <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
@@ -357,7 +357,7 @@ th,td{
         <td> $9 </td>
       </tr>
       </table> 
-     <script type="text/javascript">
+    <!-- <script type="text/javascript">
         function httpGet(path)
         {
             var xmlHttp = new XMLHttpRequest();
@@ -378,9 +378,11 @@ th,td{
                 document.close()
             }
         }
-     </script>
-     <button type="button" onclick="httpGet('/order');">Click Me!</button>
- 
+     </script>-->
+    <!-- <button type="button" onclick="httpGet('/order');">Click Me!</button>-->
+    <form action="/user/order" method="GET">
+       <input type="submit" value="Order">
+        </form>
          
  </body>
 </html>

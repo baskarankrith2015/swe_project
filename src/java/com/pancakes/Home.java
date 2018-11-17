@@ -46,9 +46,9 @@ public class Home {
     @Path("/order")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String serveOrderPage( @HeaderParam("session-cookie") String cookie) {
+    public String serveOrderPage( @CookieParam("session-cookie") Cookie cookie) {
         try {
-           String sessionVal=cookie;
+           String sessionVal=cookie.getValue();
             return htmlFileReader.readFile("src/resource/html/Orderpage.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
@@ -57,9 +57,9 @@ public class Home {
     @Path("/carts")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String serveCartPage( @HeaderParam("session-cookie") String cookie) {
+    public String serveCartPage( @CookieParam("session-cookie") Cookie cookie) {
         try {
-                String sessionVal=cookie;
+            String sessionVal=cookie.getValue();
             return htmlFileReader.readFile("src/resource/html/cart_page.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();

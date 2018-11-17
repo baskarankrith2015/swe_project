@@ -1,6 +1,7 @@
 package com.pancakes;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -124,6 +125,18 @@ public class LoginRestAPI {
         //STEP 6: Clean-up environment
        returnClass.close();
         return user;
+    }
+
+    @Path("/order")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveOrderPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/Orderpage.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
     }
 
 }

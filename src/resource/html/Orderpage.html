@@ -318,15 +318,7 @@ th,td{
     <script>
      document.cookie = "session-cookie=MARKER-COOKIE"
      </script>
-    <script type="text/javascript">
-		function SaveToLocalStorage(){
-			localStorage.setItem('dropdown_PLAIN',$('#dropdown_PLAIN').value);
-			localStorage.setItem('dropdown_STRAWBERRY',$('#dropdown_STRAWBERRY').value);
-			localStorage.setItem('dropdown_BLUEBERRY',$('#dropdown_BLUEBERRY').value);
-            httpGet('/carts');
-            
-		}
-	</script>
+    
  	<header class ="Page1">
       <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
        <!-- <form>
@@ -402,8 +394,17 @@ th,td{
         </td>
       </tr>
       </table> 
-     <button class ="addtocart" onclick="SaveToLocalStorage();"><b>ADD TO CART</b></button>
-   <button type="button" onclick="SaveToLocalStorage();">Click Me!</button>
+     <script type="text/javascript">
+
+		function SaveToLocalStorage(){
+            var e = document.getElementById("dropdown_BLUEBERRY");
+            var strUser = e.options[e.selectedIndex].value;
+            console.log(strUser);
+            localStorage.setItem('a',strUser);
+			}
+	</script>
+      <a href ="/carts"><button class ="addtocart" onclick="SaveToLocalStorage()"><b>ADD TO CART</b></button></a>
+  
   </body>
 </html>
 
