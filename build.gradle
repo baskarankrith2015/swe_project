@@ -6,6 +6,7 @@
  */
 plugins{
 id 'java'
+//id 'distribution'
 }
 repositories{
 	mavenCentral()
@@ -16,6 +17,9 @@ sourceSets {
 		java{
 		srcDirs= ['src/java']
 		}
+		resources {
+            srcDirs = ['src/resource']
+        }
 	}	
 }
 dependencies {
@@ -36,3 +40,33 @@ dependencies {
 		 'junit:junit:4.12'
 
 }
+
+jar {
+    manifest {
+        attributes(("Main-Class"): "com.pancakes.ApplicationServer",
+                ("Class-Path"): configurations.compile.collect { "lib/" + it.getName() })
+    }
+
+
+
+//    mainClassName = "com.pancakes.ApplicationServer"
+}
+
+task dist(type: Zip) {
+    dependsOn jar
+    baseName = "server-"
+    from jar {    
+        into "/"
+    }
+    into("/lib") {
+        from configurations.runtime {
+            exclude 'local'
+            exclude 'com'
+            exclude 'i18n'
+            exclude 'META-INF'
+        }
+    }
+   
+ }
+
+

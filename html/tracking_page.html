@@ -333,19 +333,26 @@ th,td{
   </header> 
      <div class= "divider"></div>
      
-    <!-- link to this page from the tracking_page when order number is not found-->
-     <div class="error">
-     <h2 style="font-size: 500%">ERROR FOUND</h2>
-     </div>
+     <p style="text-align: left; font-size: 200%; color: darkcyan; font-style: oblique; font-family: serif;">
+     <br>
+     Thank you for placing your order at Yummy Pancakes!<br>
+     Your order will be ready in 30 minutes.<br>
+         
+    <!--button type="button" onclick="loadDoc()">PLACE ORDER</button-->
+
+     <p id="orderID"></p>
      
-     <div class="error">
-     <p style="font-size: 200%;"> <b>AWW SNAP 😞<br>
-     <!-- The order number <i>insert_number</i> cannot be found!<br> -->
-         Please verify your login details and/order number and try again!</b><br></p>
-     </div>
+     <p>Please provide your order number # <span id="document.getElementById('orderID').innerHTML = getOrderID();"></span> at the counter in the restaurant to pick-up your order.<br></p>
      
-     <!--a style="text-align: center; font-size: 150%;" href="main_page.html">GO BACK HOME</a-->
-     <button class ="buttonhome" onclick="window.location.href = 'main_page.html';">GO BACK HOME</button>
+     <br>
+     <br>
+     <p style="text-align: left; font-size: 200%; color: darkcyan; font-style: oblique; font-family: serif;">If you would like to edit your order:</p><br>
+     <button class ="editorder" onclick="window.location.href = 'order_history_page.html';">EDIT ORDER</button>
+     
+     <!-- Call Results in Error, Customer Reference not found, lead to error page -->
+     <!--a href="error_page.html"></a-->
+     
+      <!--img src="images/stacks_of_pancakes.png" alt="Stacks of Pancakes" align="bottom" style="width:1460px;height:150px;"-->
      
     <!--footer>
      &lt;&copy; 2018 Priyanka Suresh SWE &gt; 

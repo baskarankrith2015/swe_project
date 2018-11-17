@@ -332,22 +332,19 @@ th,td{
           </nav>
   </header> 
      <div class= "divider"></div>
+    
+     <!-- Call customer information HOW -->
+     <h4 style="font-size: 200%; font-family: fantasy">Active Orders for Customer <i style="color: red">insert_name</i> :</h4>
      
-    <!-- link to this page from the tracking_page when order number is not found-->
-     <div class="error">
-     <h2 style="font-size: 500%">ERROR FOUND</h2>
-     </div>
+     <!-- include button for each order history mentioned -->
+     <button class ="editorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button>
+        
+     <!-- Call Results in Error, Customer Reference not found, lead to error page -->
+     <a href="error_page.html"></a>
      
-     <div class="error">
-     <p style="font-size: 200%;"> <b>AWW SNAP 😞<br>
-     <!-- The order number <i>insert_number</i> cannot be found!<br> -->
-         Please verify your login details and/order number and try again!</b><br></p>
-     </div>
-     
-     <!--a style="text-align: center; font-size: 150%;" href="main_page.html">GO BACK HOME</a-->
-     <button class ="buttonhome" onclick="window.location.href = 'main_page.html';">GO BACK HOME</button>
-     
-    <!--footer>
+      <img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;">
+    
+     <!--footer>
      &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
     </footer-->
  </body>

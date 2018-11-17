@@ -4,6 +4,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 @Path("/user")
 public class LoginRestAPI {
     private Session session=new Session();
-
+    private HtmlFileReader htmlFileReader = new HtmlFileReader();
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
 
     private static PasswordUtils passwordUtils= new PasswordUtils();
@@ -26,41 +27,38 @@ public class LoginRestAPI {
         return "Hello user";
     }
 
-    @PUT
+    @POST
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response createUserRestApi(@FormParam("user_name") String userName,
+    @Produces(MediaType.TEXT_HTML)
+    public String createUserRestApi(@FormParam("user_name") String userName,
                                       @FormParam("user_id") String userId,
                                       @FormParam("password") final String password) {
         User checkUser = null;
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(e)
-                    .build();
+            return "r";
+                   // Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
         }
         if (checkUser == null) {
             createUser(userId, userName, password);
             try {
                 User newUser = readUser(userId);
                 NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(newUser.getUserId()));
-                return Response.status(Response.Status.OK)
-                        .entity(newUser)
-                        .cookie(newCookie)
+                return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(newUser.getUserId()));
 
-                        .build();
             } catch (SQLException e) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .entity(e)
-                        .build();
+                return "w";
+                //Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
-           return  Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("User already exists")
-                    .build();
+           return  "q";
+                   //Response.status(Response.Status.UNAUTHORIZED).entity("User already exists").build();
         }
+        return "Shit happened";
     }
     @POST
     @Path("/login")
@@ -88,7 +86,6 @@ public class LoginRestAPI {
                return  Response.status(Response.Status.UNAUTHORIZED)
                         .entity("Wrong credentials")
                         .build();
-
             }
             else {
 

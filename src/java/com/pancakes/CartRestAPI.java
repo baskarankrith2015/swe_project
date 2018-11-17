@@ -20,6 +20,6 @@ public class CartRestAPI {
                                        @FormParam("blueberry") final Integer blueberryItems,
                                        @PathParam("cartID") final String cartId,
                                        @CookieParam("session_cookie") Cookie cookie) throws SQLException {
-
+return null;
     }
 }

@@ -313,7 +313,7 @@ th,td{
 
      </style>
  </head>
- <body> 
+    <body>
  	<header class = "Page1">
       <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
        <!-- <form>
@@ -332,23 +332,30 @@ th,td{
           </nav>
   </header> 
      <div class= "divider"></div>
+    
+     <!-- Call Order Information HOW -->
+     <h4 style="font-size: 200%; font-family: fantasy">Your cart contains:</h4>
      
-    <!-- link to this page from the tracking_page when order number is not found-->
-     <div class="error">
-     <h2 style="font-size: 500%">ERROR FOUND</h2>
-     </div>
-     
-     <div class="error">
-     <p style="font-size: 200%;"> <b>AWW SNAP 😞<br>
-     <!-- The order number <i>insert_number</i> cannot be found!<br> -->
-         Please verify your login details and/order number and try again!</b><br></p>
-     </div>
-     
-     <!--a style="text-align: center; font-size: 150%;" href="main_page.html">GO BACK HOME</a-->
-     <button class ="buttonhome" onclick="window.location.href = 'main_page.html';">GO BACK HOME</button>
+     <!-- reference to the menu page -->
+     <button class ="editcart" onclick="document.getElementById('orderID').innerHTML = getOrderID()">EDIT CART</button>
+    
+    <br>
+    <br>
+    <br>    
+        
+    <p id="orderID"></p>
+
+    <p style="font-display: fallback; font-family: cursive; font-size: 150%">Please review your order and submit!<br>
+    Payments can be made at the pickup location.<br></p>
+    
+    <!-- reference to the tracking page -->
+     <button class ="placeorder" onclick="window.location.href = 'tracking_page.html';">PLACE ORDER</button>
+    
+    <!--img src="images/pancake-footer.png" alt="Footer Pancake" align="bottom" style="width:1460px;height:150px;"-->
      
     <!--footer>
-     &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
+      <img src="pancake-footer.png" alt="Pancake Footer" align="bottom" style="width:200px;height:300px;">
     </footer-->
+    
  </body>
 </html>
