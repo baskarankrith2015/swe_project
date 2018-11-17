@@ -4,23 +4,31 @@ package com.pancakes;
  * Created by krithikabaskaran on 11/10/18.
  */
 public class Cart {
-    String cartId;
+    String userId;
     int strawberry;
     int blueberry;
     int plaincake;
 
-    public Cart(String cartId, int strawberry, int blueberry, int plaincake) {
-        this.cartId = cartId;
+    public Cart(){}
+    public Cart(String userId, int strawberry, int blueberry, int plaincake) {
+        this.userId = userId;
         this.strawberry = strawberry;
         this.blueberry = blueberry;
         this.plaincake = plaincake;
     }
-    public String getCartId() {
-        return cartId;
+
+    public Cart(Integer plainItems, Integer strawberryItems, Integer blueberryItems) {
+        this.strawberry = strawberryItems;
+        this.blueberry = blueberryItems;
+        this.plaincake = plainItems;
     }
 
-    public void setCartId(String cartId) {
-        this.cartId = cartId;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getStrawberry() {

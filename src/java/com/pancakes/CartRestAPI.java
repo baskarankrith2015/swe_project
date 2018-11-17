@@ -18,8 +18,16 @@ public class CartRestAPI {
     public Response createOrderRestApi(@FormParam("plain") final Integer plainItems,
                                        @FormParam("strawberry") final Integer strawberryItems,
                                        @FormParam("blueberry") final Integer blueberryItems,
-                                       @PathParam("cartID") final String cartId,
                                        @CookieParam("session_cookie") Cookie cookie) throws SQLException {
-return null;
+
+        Cart c= new Cart(plainItems,strawberryItems,blueberryItems);
+        Session session= new Session();
+        String userId=session.getUserId(cookie.getValue());
+        c.setUserId(userId);
+        return null;
+    }
+
+    private void writeCart() {
+
     }
 }
