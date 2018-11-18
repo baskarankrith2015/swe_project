@@ -336,7 +336,19 @@ th,td{
           </nav>
   </header> 
      <div class= "divider"></div>
-    
+    <script>
+        function sendInfo() {
+          var http = new XMLHttpRequest();
+              http.open('GET', "/pancake/orders/", false);
+              http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              http.send(null);
+              var  resp= http.responseText;
+             if(http.status == 200){
+                 var obj= JSON.parse(resp);
+                 console.log(obj[0].orderID)
+              }
+          }
+     </script>
      <!-- Call customer information HOW -->
      <h4 style="font-size: 200%; font-family: fantasy">Active Orders for Customer <i style="color: red">insert_name</i> :</h4>
      
@@ -345,7 +357,8 @@ th,td{
         
      <!-- Call Results in Error, Customer Reference not found, lead to error page -->
      <a href="error_page.html"></a>
-     
+      <button class ="editcartorder" onclick=sendInfo();>View Orders</button>
+    
       <!--img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;"-->
     
      <!--footer>

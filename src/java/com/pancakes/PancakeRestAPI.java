@@ -148,7 +148,7 @@ public class PancakeRestAPI {
     @Path("/orders/{orderID}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEntireOrderRestApi(@PathParam("orderID") String orderUUID,
+    public Response getOrderRestApi(@PathParam("orderID") String orderUUID,
                                              @CookieParam("session_cookie") Cookie cookie) {
 
         String sessionVal=cookie.getValue();
@@ -157,6 +157,26 @@ public class PancakeRestAPI {
         return  Response.status(Response.Status.OK)
                 .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
                 .entity("Order added")
+                .build();
+    }
+    @GET
+    @Path("/orders/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEntireOrderRestApi(
+            @CookieParam("session_cookie") Cookie cookie) {
+
+        String sessionVal=cookie.getValue();
+        String userId= session.getUserId(sessionVal);
+        List<Order> orders= new ArrayList<>();
+        try {
+           orders= getAllOrder(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  Response.status(Response.Status.OK)
+                .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                .entity(orders)
                 .build();
     }
     @DELETE
