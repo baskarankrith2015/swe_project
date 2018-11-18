@@ -47,7 +47,6 @@ public class LoginRestAPI {
             createUser(userId, userName, password);
             try {
                 User newUser = readUser(userId);
-                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(newUser.getUserId()));
                 return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(newUser.getUserId()));
 
             } catch (SQLException e) {
@@ -72,26 +71,33 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
         }
         if (checkUser == null) {
 
-              // return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
 
         } else {
             boolean verified = passwordUtils.verifyUserPassword(password, checkUser.password);
             if(!verified){
-              // return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
+                try {
+                    return htmlFileReader.readFile("src/resource/html/error_page.html");
+                } catch (IOException e1) {
+                    return "Something Horribly went wrong";
+                }
             }
             else {
-
-
-                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
-    //return  Response.status(Response.Status.OK).cookie(newCookie).entity("User logged in").build();
                 return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(checkUser.getUserId()));
             }
         }
-    return "error";
     }
 
     @POST
@@ -104,11 +110,19 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
         }
         if (checkUser == null) {
 
-            // return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong "+ e1.getMessage();
+            }
 
         } else {
             try {
@@ -117,7 +131,7 @@ public class LoginRestAPI {
                 return "Something went wrong" + e.getMessage();
             }
         }
-        return "error";
+
     }
 
     public void createUser(String userId, String userName, String password) {
@@ -154,20 +168,19 @@ public class LoginRestAPI {
             String sessionVal=cookie.getValue();
             return htmlFileReader.readFile("src/resource/html/Orderpage.html",sessionVal);
         } catch (Exception e) {
-            return "Something went wrong" + e.getMessage();
+            try {
+                return htmlFileReader.readFile("src/resource/html/main_page.html");
+            } catch (Exception e1) {
+                return "Something went wrong" + e.getMessage();
+            }
         }
     }
     @Path("/images/blueberries-1867398_1920.jpg")
     @GET
     @Produces("image/jpg")
-    public byte[] blueberryImage() {
-        try {
-            return imageRendering.getImage("blueberries-1867398_1920.jpg");
+    public byte[] blueberryImage() throws IOException {
 
+        return imageRendering.getImage("blueberries-1867398_1920.jpg");
 
-        } catch (Exception e) {
-            System.out.println("Something went wrong" + e.getMessage());
-        }
-        return null;
     }
 }

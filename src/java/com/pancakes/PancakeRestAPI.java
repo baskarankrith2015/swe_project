@@ -5,6 +5,7 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,32 +31,44 @@ public class PancakeRestAPI {
                                       @FormParam("blueberry") final Integer blueberryItems,
                                      @CookieParam("session-cookie") Cookie cookie) throws SQLException {
 
-        String sessionVal=cookie.getValue();
-        String userId= session.getUserId(sessionVal);
-        User user= null;
+        String sessionVal = cookie.getValue();
+        String userId = session.getUserId(sessionVal);
+        User user = null;
         try {
             user = loginRestAPI.readUser(userId);
         } catch (SQLException e) {
-           // return Response.status(Response.Status.UNAUTHORIZED).entity("User doesn't exist").build();
+            // return Response.status(Response.Status.UNAUTHORIZED).entity("User doesn't exist").build();
         }
-        if(user==null){
-           //return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
+        if (user == null) {
+            //return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
         }
-        Order order =new Order(UUID.randomUUID().toString());
-      for(int i=0; i<plainItems; i++) {
-          PanCake panCake = new PanCake(UUID.randomUUID().toString());
-          panCake.setCreationTimestamp(System.currentTimeMillis());
-          panCake.setOrderId(order.getOrderID());
-          writePancake(panCake);
-      }
-        for(int i=0; i<strawberryItems; i++) {
+        if(plainItems==0 && strawberryItems==0 && blueberryItems ==0){
+            try {
+                return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(user.getUserId()));
+            } catch (IOException e) {
+                try {
+                    return htmlFileReader.readFile("src/resource/html/error_page.html");
+                } catch (IOException e1) {
+                    return "Something Horribly went wrong";
+                }
+            }
+
+        }
+        Order order = new Order(UUID.randomUUID().toString());
+        for (int i = 0; i < plainItems; i++) {
+            PanCake panCake = new PanCake(UUID.randomUUID().toString());
+            panCake.setCreationTimestamp(System.currentTimeMillis());
+            panCake.setOrderId(order.getOrderID());
+            writePancake(panCake);
+        }
+        for (int i = 0; i < strawberryItems; i++) {
             PanCake panCake = new PanCake(UUID.randomUUID().toString());
             panCake.setCreationTimestamp(System.currentTimeMillis());
             panCake.setStrawberrySauce(true);
             panCake.setOrderId(order.getOrderID());
             writePancake(panCake);
         }
-        for(int i=0; i<blueberryItems; i++) {
+        for (int i = 0; i < blueberryItems; i++) {
             PanCake panCake = new PanCake(UUID.randomUUID().toString());
             panCake.setCreationTimestamp(System.currentTimeMillis());
             panCake.setBlueberrySauce(true);
@@ -66,9 +79,13 @@ public class PancakeRestAPI {
         order.setUserID(userId);
         writeOrder(order);
         try {
-            return htmlFileReader.readFile("src/resource/html/tracking_page.html",sessionVal,order.getOrderID());
+            return htmlFileReader.readFile("src/resource/html/tracking_page.html", sessionVal, order.getOrderID());
         } catch (Exception e) {
-            return "Something went wrong" + e.getMessage();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
         }
     }
     @POST
@@ -172,10 +189,10 @@ public class PancakeRestAPI {
         try {
            orders= getAllOrder(userId);
         } catch (SQLException e) {
-            e.printStackTrace();
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
         return  Response.status(Response.Status.OK)
-                .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                .cookie(new NewCookie("session-cookie",session.createCookie(userId)))
                 .entity(orders)
                 .build();
     }
@@ -192,11 +209,26 @@ public class PancakeRestAPI {
         try {
             orders= getLatestOrder(userId);
         } catch (SQLException e) {
-            e.printStackTrace();
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
         return  Response.status(Response.Status.OK)
-                .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                .cookie(new NewCookie("session-cookie",session.createCookie(userId)))
                 .entity(orders.get(0))
+                .build();
+    }
+    @POST
+    @Path("/delete/{orderID}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete(@PathParam("orderID") String orderUUID,
+                                    @CookieParam("session_cookie") Cookie cookie) {
+
+        String sessionVal=cookie.getValue();
+        String userId= session.getUserId(sessionVal);
+        deleteOrder(orderUUID);
+        return  Response.status(Response.Status.OK)
+                .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                .entity("Order added")
                 .build();
     }
     @DELETE
