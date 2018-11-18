@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
  */
 @Path("/pancake")
 public class PancakeRestAPI {
+    private HtmlFileReader htmlFileReader = new HtmlFileReader();
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
     LoginRestAPI loginRestAPI = new LoginRestAPI();
     private Session session=new Session();
@@ -24,7 +25,7 @@ public class PancakeRestAPI {
     @Path("/order")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrderRestApi(@FormParam("plain") final Integer plainItems,
+    public String createOrderRestApi(@FormParam("plain") final Integer plainItems,
                                       @FormParam("strawberry") final Integer strawberryItems,
                                       @FormParam("blueberry") final Integer blueberryItems,
                                      @CookieParam("session-cookie") Cookie cookie) throws SQLException {
@@ -35,14 +36,10 @@ public class PancakeRestAPI {
         try {
             user = loginRestAPI.readUser(userId);
         } catch (SQLException e) {
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("User doesn't exist")
-                    .build();
+           // return Response.status(Response.Status.UNAUTHORIZED).entity("User doesn't exist").build();
         }
         if(user==null){
-           return  Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Wrong credentials")
-                    .build();
+           //return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
         }
         Order order =new Order(UUID.randomUUID().toString());
       for(int i=0; i<plainItems; i++) {
@@ -68,10 +65,11 @@ public class PancakeRestAPI {
         order.setCreationTimestamp(System.currentTimeMillis());
         order.setUserID(userId);
         writeOrder(order);
-      return  Response.status(Response.Status.OK)
-              .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-              .entity(order)
-              .build();
+        try {
+            return htmlFileReader.readFile("src/resource/html/tracking_page.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
     }
     @POST
     @Path("/order/{orderID}")

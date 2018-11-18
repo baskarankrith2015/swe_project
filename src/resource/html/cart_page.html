@@ -399,9 +399,16 @@ th,td{
               var straw=localStorage.getItem('dropdown_STRAWBERRY');
                var blue=localStorage.getItem('dropdown_BLUEBERRY');
               var params = 'plain='+plain+'&strawberry='+straw+'&blueberry='+blue;
-              http.open('POST', "/pancake/order", true);
+              http.open('POST', "/pancake/order", false);
               http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
               http.send(params);
+              var  resp= http.responseText;
+             if(http.status == 200){
+                  console.log('success');
+                  document.open();
+                  document.write(resp);
+                  document.close;
+              }
           }
 
     </script>
