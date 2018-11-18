@@ -110,4 +110,15 @@ public class Home {
             return "Something went wrong" + e.getMessage();
         }
     }
+    @Path("/history")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String historyPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal="";
+            return htmlFileReader.readFile("src/resource/html/order_history_page.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
 }
