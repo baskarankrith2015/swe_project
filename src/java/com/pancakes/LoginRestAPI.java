@@ -94,6 +94,32 @@ public class LoginRestAPI {
     return "error";
     }
 
+    @POST
+    @Path("/logout")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String logoutUserRestApi(@FormParam("user_id") String userId,
+                                   @FormParam("password") final String password) throws IOException {
+        User checkUser = null;
+        try {
+            checkUser = readUser(userId);
+        } catch (SQLException e) {
+            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
+        }
+        if (checkUser == null) {
+
+            // return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
+
+        } else {
+            try {
+                return htmlFileReader.readFile("src/resource/html/main_page.html");
+            } catch (Exception e) {
+                return "Something went wrong" + e.getMessage();
+            }
+        }
+        return "error";
+    }
+
     public void createUser(String userId, String userName, String password) {
         String securep=passwordUtils.generateSecurePassword(password);
         String sql="Insert into user_details (user_id,user_name,user_password) VALUES ("
