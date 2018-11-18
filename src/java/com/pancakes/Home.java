@@ -65,4 +65,27 @@ public class Home {
             return "Something went wrong" + e.getMessage();
         }
     }
+
+    @Path("/location")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveLocationPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/location_page.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
+    @Path("/menu")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveMenuPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/location_page.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
 }

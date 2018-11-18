@@ -29,7 +29,7 @@ public class ImageRendering {
         return null;
     }
 
-    private byte[] getImage(String relativePath) throws IOException {
+    public byte[] getImage(String relativePath) throws IOException {
         File file = new File("src/resource/html/images/"+relativePath);
         BufferedImage image = ImageIO.read(file);
 

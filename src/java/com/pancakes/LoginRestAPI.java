@@ -20,6 +20,7 @@ public class LoginRestAPI {
     private Session session=new Session();
     private HtmlFileReader htmlFileReader = new HtmlFileReader();
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
+    ImageRendering imageRendering = new ImageRendering();
 
     private static PasswordUtils passwordUtils= new PasswordUtils();
     @GET
@@ -64,41 +65,33 @@ public class LoginRestAPI {
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response loginUserRestApi(@FormParam("user_id") String userId,
-                                      @FormParam("password") final String password) {
+    @Produces(MediaType.TEXT_HTML)
+    public String loginUserRestApi(@FormParam("user_id") String userId,
+                                      @FormParam("password") final String password) throws IOException {
         User checkUser = null;
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(e)
-                    .build();
+            //return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
         }
         if (checkUser == null) {
 
-               return  Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("Wrong credentials")
-                        .build();
+              // return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
 
         } else {
             boolean verified = passwordUtils.verifyUserPassword(password, checkUser.password);
             if(!verified){
-               return  Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("Wrong credentials")
-                        .build();
+              // return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
             }
             else {
 
 
                 NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
-    return  Response.status(Response.Status.OK)
-                        .cookie(newCookie)
-                        .entity("User logged in")
-                        .build();
+    //return  Response.status(Response.Status.OK).cookie(newCookie).entity("User logged in").build();
+                return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(checkUser.getUserId()));
             }
         }
-
+    return "error";
     }
 
     public void createUser(String userId, String userName, String password) {
@@ -138,5 +131,17 @@ public class LoginRestAPI {
             return "Something went wrong" + e.getMessage();
         }
     }
+    @Path("/images/blueberries-1867398_1920.jpg")
+    @GET
+    @Produces("image/jpg")
+    public byte[] blueberryImage() {
+        try {
+            return imageRendering.getImage("blueberries-1867398_1920.jpg");
 
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong" + e.getMessage());
+        }
+        return null;
+    }
 }
