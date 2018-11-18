@@ -276,7 +276,20 @@ th,td{
 
 }
 
+.editcartorder{
 
+	 font-family: Calibri;
+	position: absolute;
+    left : 70%;
+    bottom: 65%;
+	background-color: grey;
+	font-size: 20px;
+	color:black;
+	cursor: pointer;
+	border: solid 2px black;
+	border-radius: 50px;
+
+}
 
 .editcart {
   font-family: Calibri;
@@ -337,17 +350,19 @@ th,td{
   </header> 
      <div class= "divider"></div>
      <!-- Call customer information HOW -->
-     <h4 style="font-size: 200%; font-family: fantasy">Your Active Orders :</h4>
+     <h4 style="font-size: 200%; color:burlywood; font-family: fantasy">Please Click on the View Orders button to view your Active Orders :</h4>
      
      <!-- include button for each order history mentioned -->
-     <button class ="editcartorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button>
+     <!--button class ="editcartorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button-->
         
      <!-- Call Results in Error, Customer Reference not found, lead to error page -->
-     <a href="error_page.html"></a>
+     <!--a href="error_page.html"></a-->
      <button class ="editcartorder" onclick=sendInfo();>View Orders</button>
      <div id = "history">
 	</div>
     <script>
+        
+                
     function sendInfo() {
     	var http = new XMLHttpRequest();
     	http.open('GET', "/pancake/orders/", false);
@@ -359,7 +374,8 @@ th,td{
     		var length = Object.keys(obj).length;
     		if(length==0){
     			var div = document.getElementById('history');
-				div.innerHTML += 'No Order Found!';
+                div.innerHTML += 'Sorry, No Order Found!';
+                div.setAttribute("style", "color: skyblue; font-size: 300%"); 
 			}else{
 				var test_div = document.getElementById('history');
 				test_div.innerHTML = '';
@@ -370,18 +386,20 @@ th,td{
 					form.name = 'input';
 					form.action = '/pancake/delete';
 					form.method = 'post';
-					
+                    form.setAttribute("style", "background-color: none; border: 3px transparent skyblue;");
+                        
 					form.appendChild(document.createTextNode(''));
 					
 					var input = form.appendChild(document.createElement('input'));
 					input.type = 'text';
 					input.name = 'orderID';
+                    input.setAttribute("style", "color: maroon;"); 
 					input.value = obj[i].orderID;
 					
 					
 					input = form.appendChild(document.createElement('input'));
 					input.type = 'submit';
-					input.value = 'CANCEL';
+					input.value = 'CANCEL ORDER';
 				}
 			}
 		}

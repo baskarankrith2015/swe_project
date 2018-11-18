@@ -228,7 +228,7 @@ public class PancakeRestAPI {
         String userId= session.getUserId(sessionVal);
         deleteOrder(orderUUID);
         try {
-            return htmlFileReader.readFile("src/resource/html/order_history_page.html",sessionVal);
+            return htmlFileReader.readFile("src/resource/html/order_cancel_page.html",sessionVal);
         } catch (Exception e) {
             try {
                 return htmlFileReader.readFile("src/resource/html/error_page.html");
