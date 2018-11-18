@@ -396,10 +396,15 @@ th,td{
      <script type="text/javascript">
 
 		function SaveToLocalStorage(){
-            var e = document.getElementById("dropdown_BLUEBERRY");
-            var strUser = e.options[e.selectedIndex].value;
-            console.log(strUser);
-            localStorage.setItem('a',strUser);
+            var a = document.getElementById("dropdown_PLAIN");
+            var strUserA = a.options[a.selectedIndex].value;
+            localStorage.setItem('dropdown_PLAIN',strUserA);
+            var b = document.getElementById("dropdown_STRAWBERRY");
+            var strUserB = b.options[b.selectedIndex].value;
+            localStorage.setItem('dropdown_STRAWBERRY',strUserB);
+            var c = document.getElementById("dropdown_BLUEBERRY");
+            var strUserC = c.options[c.selectedIndex].value;
+            localStorage.setItem('dropdown_BLUEBERRY',strUserC);
 			}
 	</script>
       <a href ="/carts"><button class ="addtocart" onclick="SaveToLocalStorage()"><b>ADD TO CART</b></button></a>

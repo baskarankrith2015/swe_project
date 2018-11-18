@@ -316,7 +316,11 @@ th,td{
     <body class="Page2">
     <script>
      document.cookie = "session-cookie=MARKER-COOKIE"
-     </script>
+     </script><script>
+	function goBack() {
+	    window.history.back();
+	}
+	</script>
  	<header class = "Page1">
       <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
        <!-- <form>
@@ -338,9 +342,45 @@ th,td{
     
      <!-- Call Order Information HOW -->
      <h4 style="font-size: 300%; color: chartreuse; fantasy">Your cart contains:</h4>
+     <div class= "divider"></div>
+     	<table id='check_out_cart'>
+	      	<script>
+	      	if(localStorage.getItem('dropdown_PLAIN')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Plain Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_PLAIN');
+			}if(localStorage.getItem('dropdown_STRAWBERRY')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Strawberry Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_STRAWBERRY');
+			}if(localStorage.getItem('dropdown_BLUEBERRY')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Blueberry Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_BLUEBERRY');
+			}
+	      		
+			</script>
+      	</table>
+	     
+     
      
      <!-- reference to the menu page -->
-     <button class ="editcart" onclick="document.getElementById('orderID').innerHTML = getOrderID()">EDIT CART</button>
+     <button class ="editcart" onclick="goBack()">EDIT CART</button>
     
     <br>
     <br>

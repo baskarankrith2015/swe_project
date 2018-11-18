@@ -37,7 +37,7 @@ public class Home {
     @Produces(MediaType.TEXT_HTML)
     public String serveSignupPage() {
         try {
-            return htmlFileReader.readFile("src/resource/html/create_account_page.html");
+            return htmlFileReader.readFile("src/resource/html/Signup_page.html");
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
         }
