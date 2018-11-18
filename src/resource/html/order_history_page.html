@@ -313,12 +313,12 @@ th,td{
 
      </style>
  </head>
- <body> 
+ <body class="Page2"> 
     <script>
      document.cookie = "session-cookie=MARKER-COOKIE"
      </script>
  	<header class = "Page1">
-      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
+       <h1><a style = "font-style: normal;color: white;" href ="/">Yummy Pancakes</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -326,11 +326,12 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-              <li><a href="Menupage.html">MENU</a></li>
-              <li><a href="location_page.html">LOCATION</a></li>
+              <li><a href="/menu">MENU</a></li>
+              <li><a href="/location">LOCATION</a></li>
               <li><a href="tracking_page.html">TRACK ORDER</a></li>
-              <li><a href="cart_page.html">CART</a></li>
+              <li><a href="/carts">CART</a></li>
               <li><a href="order_history_page.html">ORDER HISTORY</a></li>
+              <li><a href="/">LOG OUT</a></li>  
             </ul>  
           </nav>
   </header> 
@@ -340,12 +341,12 @@ th,td{
      <h4 style="font-size: 200%; font-family: fantasy">Active Orders for Customer <i style="color: red">insert_name</i> :</h4>
      
      <!-- include button for each order history mentioned -->
-     <button class ="editorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button>
+     <button class ="editcartorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button>
         
      <!-- Call Results in Error, Customer Reference not found, lead to error page -->
      <a href="error_page.html"></a>
      
-      <img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;">
+      <!--img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;"-->
     
      <!--footer>
      &lt;&copy; 2018 Priyanka Suresh SWE &gt; 

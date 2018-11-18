@@ -232,7 +232,22 @@ th,td{
 	border-radius: 50px;
 
 }
+         
+.editcartorder{
 
+	 font-family: Calibri;
+	position: absolute;
+    left : 70%;
+    bottom: 65%;
+	background-color: grey;
+	font-size: 20px;
+	color:black;
+	cursor: pointer;
+	border: solid 2px black;
+	border-radius: 50px;
+
+}
+         
 .addtocart{
 
 	font-family: Calibri;
@@ -244,6 +259,7 @@ th,td{
 	color:black;
 	cursor: pointer;
 	border: solid 2px black;
+    border-radius: 50px;
 
 }
 
@@ -322,7 +338,7 @@ th,td{
 	}
 	</script>
  	<header class = "Page1">
-      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
+    <h1><a style="font-style:normal; color: white;" href="/">YUMMY PANCAKES</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -330,19 +346,19 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-              <li><a href="Menupage.html">MENU</a></li>
-              <li><a href="location_page.html">LOCATION</a></li>
+              <li><a href="/menu">MENU</a></li>
+              <li><a href="/location">LOCATION</a></li>
               <li><a href="tracking_page.html">TRACK ORDER</a></li>
-              <li><a href="cart_page.html">CART</a></li>
+              <li><a href="/carts">CART</a></li>
               <li><a href="order_history_page.html">ORDER HISTORY</a></li>
+              <li><a href="/">LOG OUT</a></li>    
             </ul>  
           </nav>
   </header> 
      <div class= "divider"></div>
     
      <!-- Call Order Information HOW -->
-     <h4 style="font-size: 300%; color: chartreuse; fantasy">Your cart contains:</h4>
-     <div class= "divider"></div>
+     <h4 style="font-size: 200%; color: blanchedalmond; fantasy">Your cart contains:</h4>
      	<table id='check_out_cart'>
 	      	<script>
 	      	if(localStorage.getItem('dropdown_PLAIN')>0){
@@ -377,14 +393,11 @@ th,td{
 			</script>
       	</table>
 	     
-     
-     
      <!-- reference to the menu page -->
-     <button class ="editcart" onclick="goBack()">EDIT CART</button>
+     <button class ="editcartorder" onclick="goBack()">EDIT CART</button>
     
     <br>
     <br>
-    <br>    
         
     <p id="orderID"></p>
 
@@ -412,7 +425,7 @@ th,td{
           }
 
     </script>
-     <button class ="placeorder" onclick=sendInfo();>PLACE ORDER</button>
+     <button class ="addtocart" onclick=sendInfo();>COMPLETE ORDER</button>
     
     <!--img src="images/pancake-footer.png" alt="Footer Pancake" align="bottom" style="width:1460px;height:150px;"-->
      

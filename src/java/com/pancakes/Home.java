@@ -83,7 +83,7 @@ public class Home {
     public String serveMenuPage( @CookieParam("session-cookie") Cookie cookie) {
         try {
             String sessionVal=cookie.getValue();
-            return htmlFileReader.readFile("src/resource/html/location_page.html",sessionVal);
+            return htmlFileReader.readFile("src/resource/html/Menupage.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
         }
