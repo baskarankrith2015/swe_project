@@ -245,6 +245,7 @@ th,td{
 	color:black;
 	cursor: pointer;
 	border: solid 2px black;
+    border-radius: 50px;
 
 }
 
@@ -314,19 +315,12 @@ th,td{
 
      </style>
  </head>
- <body> 
+ <body class="Page2"> 
     <script>
      document.cookie = "session-cookie=MARKER-COOKIE"
      </script>
-    <script type="text/javascript">
-		function SaveToLocalStorage(){
-			localStorage.setItem('dropdown_PLAIN',$('#dropdown_PLAIN').value);
-			localStorage.setItem('dropdown_STRAWBERRY',$('#dropdown_STRAWBERRY').value);
-			localStorage.setItem('dropdown_BLUEBERRY',$('#dropdown_BLUEBERRY').value);
-		}
-	</script>
  	<header class ="Page1">
-      <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
+       <h1><a style = "font-style: normal;color: white;" href ="/">Yummy Pancakes</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -334,11 +328,12 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-              <li><a href="Menupage.html">MENU</a></li>
-              <li><a href="location_page.html">LOCATION</a></li>
-              <li><a href="tracking_page.html">TRACK ORDER</a></li>
-              <li><a href="cart_page.html">CART</a></li>
-              <li><a href="order_history_page.html">ORDER HISTORY</a></li>
+              <li><a href="/menu">MENU</a></li>
+              <li><a href="/location">LOCATION</a></li>
+              <li><a href="/track">TRACK ORDER</a></li>
+              <li><a href="/carts">CART</a></li>
+              <li><a href="/history">ORDER HISTORY</a></li>
+              <li><a href="/logout">LOG OUT</a></li>  
             </ul>  
           </nav>
   </header> 
@@ -400,7 +395,21 @@ th,td{
         </td>
       </tr>
       </table> 
-      <a href ="cart_page.html"><button class ="addtocart" onclick="SaveToLocalStorage()"><b>ADD TO CART</b></button></a>
+     <script type="text/javascript">
+
+		function SaveToLocalStorage(){
+            var a = document.getElementById("dropdown_PLAIN");
+            var strUserA = a.options[a.selectedIndex].value;
+            localStorage.setItem('dropdown_PLAIN',strUserA);
+            var b = document.getElementById("dropdown_STRAWBERRY");
+            var strUserB = b.options[b.selectedIndex].value;
+            localStorage.setItem('dropdown_STRAWBERRY',strUserB);
+            var c = document.getElementById("dropdown_BLUEBERRY");
+            var strUserC = c.options[c.selectedIndex].value;
+            localStorage.setItem('dropdown_BLUEBERRY',strUserC);
+			}
+	</script>
+      <a href ="/carts"><button class ="addtocart" onclick="SaveToLocalStorage()"><b>Add to Cart</b></button></a>
   
   </body>
 </html>

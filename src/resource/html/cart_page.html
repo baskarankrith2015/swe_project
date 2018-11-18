@@ -232,7 +232,22 @@ th,td{
 	border-radius: 50px;
 
 }
+         
+.editcartorder{
 
+	 font-family: Calibri;
+	position: absolute;
+    left : 70%;
+    bottom: 65%;
+	background-color: grey;
+	font-size: 20px;
+	color:black;
+	cursor: pointer;
+	border: solid 2px black;
+	border-radius: 50px;
+
+}
+         
 .addtocart{
 
 	font-family: Calibri;
@@ -244,6 +259,7 @@ th,td{
 	color:black;
 	cursor: pointer;
 	border: solid 2px black;
+    border-radius: 50px;
 
 }
 
@@ -313,12 +329,16 @@ th,td{
 
      </style>
  </head>
-    <body>
+    <body class="Page2">
     <script>
      document.cookie = "session-cookie=MARKER-COOKIE"
-     </script>
+     </script><script>
+	function goBack() {
+	    window.history.back();
+	}
+	</script>
  	<header class = "Page1">
-      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
+    <h1><a style="font-style:normal; color: white;" href="/">YUMMY PANCAKES</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -326,33 +346,91 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-              <li><a href="Menupage.html">MENU</a></li>
-              <li><a href="location_page.html">LOCATION</a></li>
-              <li><a href="tracking_page.html">TRACK ORDER</a></li>
-              <li><a href="cart_page.html">CART</a></li>
-              <li><a href="order_history_page.html">ORDER HISTORY</a></li>
-            </ul>  
+              <li><a href="/menu">MENU</a></li>
+              <li><a href="/location">LOCATION</a></li>
+              <li><a href="/track">TRACK ORDER</a></li>
+              <li><a href="/carts">CART</a></li>
+              <li><a href="/history">ORDER HISTORY</a></li>
+              <li><a href="/logout">LOG OUT</a></li>  
+            </ul> 
           </nav>
   </header> 
      <div class= "divider"></div>
     
      <!-- Call Order Information HOW -->
-     <h4 style="font-size: 200%; font-family: fantasy">Your cart contains:</h4>
-     
+     <h4 style="font-size: 200%; color: blanchedalmond; fantasy">Your cart contains:</h4>
+     	<table id='check_out_cart'>
+	      	<script>
+	      	if(localStorage.getItem('dropdown_BLUEBERRY')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Blueberry Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_BLUEBERRY');
+			}
+			if(localStorage.getItem('dropdown_STRAWBERRY')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Strawberry Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_STRAWBERRY');
+			}
+	      	if(localStorage.getItem('dropdown_PLAIN')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Plain Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_PLAIN');
+			}
+	      		
+			</script>
+      	</table>
+	     
      <!-- reference to the menu page -->
-     <button class ="editcart" onclick="document.getElementById('orderID').innerHTML = getOrderID()">EDIT CART</button>
+     <button class ="editcartorder" onclick="goBack()">Edit Cart</button>
     
     <br>
     <br>
-    <br>    
         
     <p id="orderID"></p>
 
-    <p style="font-display: fallback; font-family: cursive; font-size: 150%">Please review your order and submit!<br>
+    <p style="font-display: fallback; font-family: cursive; color:blanchedalmond; font-size: 150%">Please review your order and submit!<br>
     Payments can be made at the pickup location.<br></p>
     
     <!-- reference to the tracking page -->
-     <button class ="placeorder" onclick="window.location.href = 'tracking_page.html';">PLACE ORDER</button>
+      <script>
+          function sendInfo() {
+          var http = new XMLHttpRequest();
+              var plain=localStorage.getItem('dropdown_PLAIN');
+              var straw=localStorage.getItem('dropdown_STRAWBERRY');
+               var blue=localStorage.getItem('dropdown_BLUEBERRY');
+              var params = 'plain='+plain+'&strawberry='+straw+'&blueberry='+blue;
+              http.open('POST', "/pancake/order", false);
+              http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              http.send(params);
+              var  resp= http.responseText;
+             if(http.status == 200){
+                  console.log('success');
+                  document.open();
+                  document.write(resp);
+                  document.close;
+                 localStorage.setItem('dropdown_PLAIN',0);
+                 localStorage.setItem('dropdown_STRAWBERRY',0);
+                localStorage.setItem('dropdown_BLUEBERRY',0);
+              }
+          }
+
+    </script>
+     <button class ="addtocart" onclick=sendInfo();>Complete Order</button>
     
     <!--img src="images/pancake-footer.png" alt="Footer Pancake" align="bottom" style="width:1460px;height:150px;"-->
      

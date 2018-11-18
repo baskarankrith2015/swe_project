@@ -5,6 +5,7 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,48 +18,58 @@ import java.util.stream.Collectors;
  */
 @Path("/pancake")
 public class PancakeRestAPI {
+    private HtmlFileReader htmlFileReader = new HtmlFileReader();
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
+    ImageRendering imageRendering = new ImageRendering();
     LoginRestAPI loginRestAPI = new LoginRestAPI();
     private Session session=new Session();
-    @PUT
+    @POST
     @Path("/order")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrderRestApi(@FormParam("plain") final Integer plainItems,
+    public String createOrderRestApi(@FormParam("plain") final Integer plainItems,
                                       @FormParam("strawberry") final Integer strawberryItems,
                                       @FormParam("blueberry") final Integer blueberryItems,
                                      @CookieParam("session-cookie") Cookie cookie) throws SQLException {
 
-        String sessionVal=cookie.getValue();
-        String userId= session.getUserId(sessionVal);
-        User user= null;
+        String sessionVal = cookie.getValue();
+        String userId = session.getUserId(sessionVal);
+        User user = null;
         try {
             user = loginRestAPI.readUser(userId);
         } catch (SQLException e) {
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("User doesn't exist")
-                    .build();
+            // return Response.status(Response.Status.UNAUTHORIZED).entity("User doesn't exist").build();
         }
-        if(user==null){
-           return  Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("Wrong credentials")
-                    .build();
+        if (user == null) {
+            //return  Response.status(Response.Status.UNAUTHORIZED).entity("Wrong credentials").build();
         }
-        Order order =new Order(UUID.randomUUID().toString());
-      for(int i=0; i<plainItems; i++) {
-          PanCake panCake = new PanCake(UUID.randomUUID().toString());
-          panCake.setCreationTimestamp(System.currentTimeMillis());
-          panCake.setOrderId(order.getOrderID());
-          writePancake(panCake);
-      }
-        for(int i=0; i<strawberryItems; i++) {
+        if(plainItems==0 && strawberryItems==0 && blueberryItems ==0){
+            try {
+                return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(user.getUserId()));
+            } catch (IOException e) {
+                try {
+                    return htmlFileReader.readFile("src/resource/html/error_page.html");
+                } catch (IOException e1) {
+                    return "Something Horribly went wrong";
+                }
+            }
+
+        }
+        Order order = new Order(UUID.randomUUID().toString());
+        for (int i = 0; i < plainItems; i++) {
+            PanCake panCake = new PanCake(UUID.randomUUID().toString());
+            panCake.setCreationTimestamp(System.currentTimeMillis());
+            panCake.setOrderId(order.getOrderID());
+            writePancake(panCake);
+        }
+        for (int i = 0; i < strawberryItems; i++) {
             PanCake panCake = new PanCake(UUID.randomUUID().toString());
             panCake.setCreationTimestamp(System.currentTimeMillis());
             panCake.setStrawberrySauce(true);
             panCake.setOrderId(order.getOrderID());
             writePancake(panCake);
         }
-        for(int i=0; i<blueberryItems; i++) {
+        for (int i = 0; i < blueberryItems; i++) {
             PanCake panCake = new PanCake(UUID.randomUUID().toString());
             panCake.setCreationTimestamp(System.currentTimeMillis());
             panCake.setBlueberrySauce(true);
@@ -68,10 +79,15 @@ public class PancakeRestAPI {
         order.setCreationTimestamp(System.currentTimeMillis());
         order.setUserID(userId);
         writeOrder(order);
-      return  Response.status(Response.Status.OK)
-              .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-              .entity("Order placed")
-              .build();
+        try {
+            return htmlFileReader.readFile("src/resource/html/tracking_page.html", sessionVal, order.getOrderID());
+        } catch (Exception e) {
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
+        }
     }
     @POST
     @Path("/order/{orderID}")
@@ -150,7 +166,7 @@ public class PancakeRestAPI {
     @Path("/orders/{orderID}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEntireOrderRestApi(@PathParam("orderID") String orderUUID,
+    public Response getOrderRestApi(@PathParam("orderID") String orderUUID,
                                              @CookieParam("session_cookie") Cookie cookie) {
 
         String sessionVal=cookie.getValue();
@@ -161,12 +177,72 @@ public class PancakeRestAPI {
                 .entity("Order added")
                 .build();
     }
+    @GET
+    @Path("/orders/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEntireOrderRestApi(
+            @CookieParam("session-cookie") Cookie cookie) {
+
+        String sessionVal=cookie.getValue();
+        String userId= session.getUserId(sessionVal);
+        List<Order> orders= new ArrayList<>();
+        try {
+           orders= getAllOrder(userId);
+        } catch (SQLException e) {
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+        return  Response.status(Response.Status.OK)
+                .cookie(new NewCookie("session-cookie",session.createCookie(userId)))
+                .entity(orders)
+                .build();
+    }
+    @GET
+    @Path("/latest/orders/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLatestOrderRestApi(
+            @CookieParam("session-cookie") Cookie cookie) {
+
+        String sessionVal=cookie.getValue();
+        String userId= session.getUserId(sessionVal);
+        List<Order> orders= new ArrayList<>();
+        try {
+            orders= getLatestOrder(userId);
+        } catch (SQLException e) {
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+        return  Response.status(Response.Status.OK)
+                .cookie(new NewCookie("session-cookie",session.createCookie(userId)))
+                .entity(orders.get(0))
+                .build();
+    }
+    @POST
+    @Path("/delete")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String delete(@FormParam("orderID") String orderUUID,
+                                    @CookieParam("session-cookie") Cookie cookie) {
+
+        String sessionVal=cookie.getValue();
+        String userId= session.getUserId(sessionVal);
+        deleteOrder(orderUUID);
+        try {
+            return htmlFileReader.readFile("src/resource/html/order_cancel_page.html",sessionVal);
+        } catch (Exception e) {
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
+        }
+    }
     @DELETE
     @Path("/orders/{orderID}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteEntireOrderRestApi(@PathParam("orderID") String orderUUID,
-                                       @CookieParam("session_cookie") Cookie cookie) {
+                                       @CookieParam("session-cookie") Cookie cookie) {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
@@ -204,18 +280,61 @@ public class PancakeRestAPI {
 
     }
     public void deletePancake(String pancakeID){
-        String sql="delete from pancake where pancake_id='"
-                +"\""+ pancakeID+";";
+        String sql="delete from pancake where pancake_id="
+                +"\""+ pancakeID+"\";";
         System.out.println(sql);
         databaseAccess.runDatabaseQuery(sql);
 
     }
     public void deleteOrder(String orderID){
-        String sql="delete from orders where order_id='"
-                +"\""+ orderID+";";
+        String sql="delete from orders where order_id="
+                +"\""+ orderID+"\";";
         System.out.println(sql);
         databaseAccess.runDatabaseQuery(sql);
 
+    }
+
+    public List<Order> getAllOrder(String userId) throws SQLException {
+
+        String sql="Select * from orders where user_id ="
+                +"\""+userId+"\""+"ORDER BY creation_timestamp;";
+        SqlReturnClass returnClass = databaseAccess.readDatabaseQuery(sql);
+        ResultSet rs=returnClass.getResultSet();
+        List<Order>orderList= new ArrayList<>();
+        while(rs.next()){
+            //Retrieve by column name
+            String userSId  = rs.getString("user_id");
+            String id = rs.getString("order_id");
+            String timestamp = rs.getString("creation_timestamp");
+            Order order= new Order(id);
+            order.setUserID(userSId);
+            order.setCreationTimestamp(Long.parseLong(timestamp));
+            orderList.add(order);
+        }
+        //STEP 6: Clean-up environment
+        returnClass.close();
+        return orderList;
+    }
+    public List<Order> getLatestOrder(String userId) throws SQLException {
+
+        String sql="Select * from orders where user_id ="
+                +"\""+userId+"\""+"ORDER BY creation_timestamp DESC limit 1;";
+        SqlReturnClass returnClass = databaseAccess.readDatabaseQuery(sql);
+        ResultSet rs=returnClass.getResultSet();
+        List<Order>orderList= new ArrayList<>();
+        while(rs.next()){
+            //Retrieve by column name
+            String userSId  = rs.getString("user_id");
+            String id = rs.getString("order_id");
+            String timestamp = rs.getString("creation_timestamp");
+            Order order= new Order(id);
+            order.setUserID(userSId);
+            order.setCreationTimestamp(Long.parseLong(timestamp));
+            orderList.add(order);
+        }
+        //STEP 6: Clean-up environment
+        returnClass.close();
+        return orderList;
     }
     public List<Order> getOrder(String orderId) throws SQLException {
         String sql="Select * from orders where order_id ="
@@ -332,5 +451,17 @@ public class PancakeRestAPI {
         //STEP 6: Clean-up environment
         returnClass.close();
         return panCakeList;
+    }
+    @Path("/images/blueberries-1867398_1920.jpg")
+    @GET
+    @Produces("image/jpg")
+    public byte[] blueberry() {
+        try {
+            return imageRendering.getImage("blueberries-1867398_1920.jpg");
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong" + e.getMessage());
+        }
+        return null;
     }
 }

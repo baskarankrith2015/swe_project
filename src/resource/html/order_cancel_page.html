@@ -2,7 +2,7 @@
 <html>
  <head>
    <title>Welcome to Yummy Pancakes</title>
-   <!--link rel="stylesheet" type="text/css" href="style.css"-->
+      <!--link rel="stylesheet" type="text/css" href="style.css"-->
      <style>
       .Page1{
  	padding : 8px 0px 40px 40px;
@@ -220,7 +220,7 @@ th,td{
 
 .placeanorder{
 
-    font-family: Calibri;
+	 font-family: Calibri;
 	position: absolute;
     left : 70%;
     bottom: 1%;
@@ -267,8 +267,8 @@ th,td{
 }
 
 .error{
-    background-color: dimgrey;
-    color: darkred;
+    background-color: none;
+    color:floralwhite;
     margin : 30px;
     padding: 10px;
     text-align: center;
@@ -313,55 +313,40 @@ th,td{
 
      </style>
  </head>
- <body class="Page2"> 
+ <body class = "Page2"> 
      <script>
-     document.cookie = "session-cookie=MARKER-COOKIE;path=/;"
+document.cookie = "session-cookie=MARKER-COOKIE"
      </script>
- 	<header class ="Page1">
-      <h1><a style = "font-style: normal;color: white;" href ="/">Yummy Pancakes</a></h1>         
+ 	<header class = "Page1">
+       <h1><a style = "font-style: normal;color: white;" href ="/">Yummy Pancakes</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
         </form> -->
-          <nav>
+          <!--nav>
             <ul id = nav>
-             <!-- <li><a href="#">LOGIN</a></li> -->
+              <li><a href="#">LOGIN</a></li>
               <li><a href="/menu">MENU</a></li>
               <li><a href="/location">LOCATION</a></li>
               <li><a href="/track">TRACK ORDER</a></li>
               <li><a href="/carts">CART</a></li>
               <li><a href="/history">ORDER HISTORY</a></li>
-              <li><a href="/logout">LOG OUT</a></li>  
+              <li><a href="/">LOG OUT</a></li>  
             </ul>   
-          </nav>
+          </nav-->
   </header> 
-    <div class= "divider"></div> 
-      <table>
-        <tr>
-        <th><b>MENU</b></th>
-        <th><b>CALORIES</b></th> 
-        <th><b>PRICES</b></th>
-      </tr>
-      <tr>
-        <td>PLAIN PANCAKES</td>
-        <td>64 cal </td>
-        <td> $5 </td>
-      </tr>
-      <tr>
-        <td>STRAWBERRY PANCAKES</td>
-        <td>62 cal </td>
-        <td> $7 </td>
-      </tr>
-      <tr>
-        <td>BLUEBERRY PANCAKES</td>
-        <td>60 cal </td>
-        <td> $9 </td>
-      </tr>
-      </table> 
-    <!-- <button type="button" onclick="httpGet('/order');">Click Me!</button>-->
-    <form action="/user/order" method="GET">
-       <input type="submit" class ="placeanorder" value="Start Your Order">
-        </form>
+     <div class= "divider"></div>
+     
+    <!-- link to this page from the tracking_page when order number is not found-->
+     <div class="error">
+     <h2 style="font-size: 500%; color: darksalmon">Sorry you had to Cancel your Order. We hope to see you soon!</h2>
+     </div>
+     
+     <!--a style="text-align: center; font-size: 150%;" href="main_page.html">GO BACK HOME</a-->
+     <a href="/history"><input type="submit" value="Return to Order History Page"></a>
+     
+    <!--footer>
+     &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
+    </footer-->
  </body>
 </html>
-

@@ -1,6 +1,7 @@
 package com.pancakes;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -19,6 +20,7 @@ public class LoginRestAPI {
     private Session session=new Session();
     private HtmlFileReader htmlFileReader = new HtmlFileReader();
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
+    ImageRendering imageRendering = new ImageRendering();
 
     private static PasswordUtils passwordUtils= new PasswordUtils();
     @GET
@@ -38,63 +40,102 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            return "r";
-                   // Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong"+e1.getMessage();
+            }
         }
         if (checkUser == null) {
             createUser(userId, userName, password);
             try {
                 User newUser = readUser(userId);
-                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(newUser.getUserId()));
                 return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(newUser.getUserId()));
 
-            } catch (SQLException e) {
-                return "w";
-                //Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (SQLException | IOException e) {
+                try {
+                    return htmlFileReader.readFile("src/resource/html/error_page.html");
+                } catch (IOException e1) {
+                    return "Something Horribly went wrong"+e1.getMessage();
+                }
             }
         } else {
-           return  "q";
-                   //Response.status(Response.Status.UNAUTHORIZED).entity("User already exists").build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong"+e1.getMessage();
+            }
         }
-        return "Shit happened";
+
     }
     @POST
     @Path("/login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response loginUserRestApi(@FormParam("user_id") String userId,
-                                      @FormParam("password") final String password) {
+    @Produces(MediaType.TEXT_HTML)
+    public String loginUserRestApi(@FormParam("user_id") String userId,
+                                      @FormParam("password") final String password) throws IOException {
         User checkUser = null;
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(e)
-                    .build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
         }
         if (checkUser == null) {
 
-               return  Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("Wrong credentials")
-                        .build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong"+e1.getMessage();
+            }
 
         } else {
             boolean verified = passwordUtils.verifyUserPassword(password, checkUser.password);
             if(!verified){
-               return  Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("Wrong credentials")
-                        .build();
+                try {
+                    return htmlFileReader.readFile("src/resource/html/error_page.html");
+                } catch (IOException e1) {
+                    return "Something Horribly went wrong"+e1.getMessage();
+                }
             }
             else {
+                return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(checkUser.getUserId()));
+            }
+        }
+    }
 
+    @POST
+    @Path("/logout")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String logoutUserRestApi(@FormParam("user_id") String userId,
+                                   @FormParam("password") final String password) throws IOException {
+        User checkUser = null;
+        try {
+            checkUser = readUser(userId);
+        } catch (SQLException e) {
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong"+e1.getMessage();
+            }
+        }
+        if (checkUser == null) {
 
-                NewCookie newCookie= new NewCookie ("session_cookie",session.createCookie(checkUser.getUserId()));
-    return  Response.status(Response.Status.OK)
-                        .cookie(newCookie)
-                        .entity("User logged in")
-                        .build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong "+ e1.getMessage();
+            }
+
+        } else {
+            try {
+                return htmlFileReader.readFile("src/resource/html/main_page.html");
+            } catch (Exception e) {
+                return "Something went wrong" + e.getMessage();
             }
         }
 
@@ -126,4 +167,27 @@ public class LoginRestAPI {
         return user;
     }
 
+    @Path("/order")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveOrderPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/Orderpage.html",sessionVal);
+        } catch (Exception e) {
+            try {
+                return htmlFileReader.readFile("src/resource/html/main_page.html");
+            } catch (Exception e1) {
+                return "Something went wrong" + e.getMessage();
+            }
+        }
+    }
+    @Path("/images/blueberries-1867398_1920.jpg")
+    @GET
+    @Produces("image/jpg")
+    public byte[] blueberryImage() throws IOException {
+
+        return imageRendering.getImage("blueberries-1867398_1920.jpg");
+
+    }
 }

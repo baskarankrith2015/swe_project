@@ -276,7 +276,20 @@ th,td{
 
 }
 
+.editcartorder{
 
+	 font-family: Calibri;
+	position: absolute;
+    left : 70%;
+    bottom: 65%;
+	background-color: grey;
+	font-size: 20px;
+	color:black;
+	cursor: pointer;
+	border: solid 2px black;
+	border-radius: 50px;
+
+}
 
 .editcart {
   font-family: Calibri;
@@ -313,12 +326,12 @@ th,td{
 
      </style>
  </head>
- <body> 
+ <body class="Page2"> 
     <script>
      document.cookie = "session-cookie=MARKER-COOKIE"
      </script>
  	<header class = "Page1">
-      <h1><a style="font-style:normal; color: white;" href="main_page.html">YUMMY PANCAKES</a></h1>         
+       <h1><a style = "font-style: normal;color: white;" href ="/">Yummy Pancakes</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -326,29 +339,76 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-              <li><a href="Menupage.html">MENU</a></li>
-              <li><a href="location_page.html">LOCATION</a></li>
-              <li><a href="tracking_page.html">TRACK ORDER</a></li>
-              <li><a href="cart_page.html">CART</a></li>
-              <li><a href="order_history_page.html">ORDER HISTORY</a></li>
+              <li><a href="/menu">MENU</a></li>
+              <li><a href="/location">LOCATION</a></li>
+              <li><a href="/track">TRACK ORDER</a></li>
+              <li><a href="/carts">CART</a></li>
+              <li><a href="/history">ORDER HISTORY</a></li>
+              <li><a href="/logout">LOG OUT</a></li>  
             </ul>  
           </nav>
   </header> 
      <div class= "divider"></div>
-    
      <!-- Call customer information HOW -->
-     <h4 style="font-size: 200%; font-family: fantasy">Active Orders for Customer <i style="color: red">insert_name</i> :</h4>
+     <h4 style="font-size: 200%; color:burlywood; font-family: fantasy">Please Click on the View Orders button to view your Active Orders :</h4>
      
      <!-- include button for each order history mentioned -->
-     <button class ="editorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button>
+     <!--button class ="editcartorder" onclick="window.location.href = 'tracking_page.html';">TRACK ORDER</button-->
         
      <!-- Call Results in Error, Customer Reference not found, lead to error page -->
-     <a href="error_page.html"></a>
-     
-      <img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;">
+     <!--a href="error_page.html"></a-->
+     <button class ="editcartorder" onclick=sendInfo();>View Orders</button>
+     <div id = "history">
+	</div>
+    <script>
+        
+                
+    function sendInfo() {
+    	var http = new XMLHttpRequest();
+    	http.open('GET', "/pancake/orders/", false);
+    	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    	http.send(null);
+    	var resp= http.responseText;
+    	if(http.status == 200){
+    		var obj= JSON.parse(resp);
+    		var length = Object.keys(obj).length;
+    		if(length==0){
+    			var div = document.getElementById('history');
+                div.innerHTML += 'Sorry, No Order Found!';
+                div.setAttribute("style", "color: skyblue; font-size: 300%"); 
+			}else{
+				var test_div = document.getElementById('history');
+				test_div.innerHTML = '';
+				for(i=0;i<length;i++){
+					
+					var form = test_div.appendChild(document.createElement('form'));
+					
+					form.name = 'input';
+					form.action = '/pancake/delete';
+					form.method = 'post';
+                    form.setAttribute("style", "background-color: none; border: 3px transparent skyblue;");
+                        
+					form.appendChild(document.createTextNode(''));
+					
+					var input = form.appendChild(document.createElement('input'));
+					input.type = 'text';
+					input.name = 'orderID';
+                    input.setAttribute("style", "color: maroon;"); 
+					input.value = obj[i].orderID;
+					
+					
+					input = form.appendChild(document.createElement('input'));
+					input.type = 'submit';
+					input.value = 'CANCEL ORDER';
+				}
+			}
+		}
+	}
+	</script>
+	<!--img src="images/oreo%20pancake.jpg" alt="Oreo Pancake" align="right" style="width:500px;height:400px;"-->
     
-     <!--footer>
-     &lt;&copy; 2018 Priyanka Suresh SWE &gt; 
+    <!--footer>
+    &lt;&copy; 2018 Priyanka Suresh SWE &gt;
     </footer-->
  </body>
-</html>
+</html> 
