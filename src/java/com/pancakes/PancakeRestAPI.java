@@ -20,7 +20,7 @@ public class PancakeRestAPI {
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
     LoginRestAPI loginRestAPI = new LoginRestAPI();
     private Session session=new Session();
-    @PUT
+    @POST
     @Path("/order")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,7 +70,7 @@ public class PancakeRestAPI {
         writeOrder(order);
       return  Response.status(Response.Status.OK)
               .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-              .entity("Order placed")
+              .entity(order)
               .build();
     }
     @POST

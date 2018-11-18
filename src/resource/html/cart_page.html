@@ -392,7 +392,20 @@ th,td{
     Payments can be made at the pickup location.<br></p>
     
     <!-- reference to the tracking page -->
-     <button class ="placeorder" onclick="window.location.href = 'tracking_page.html';">PLACE ORDER</button>
+      <script>
+          function sendInfo() {
+          var http = new XMLHttpRequest();
+              var plain=localStorage.getItem('dropdown_PLAIN');
+              var straw=localStorage.getItem('dropdown_STRAWBERRY');
+               var blue=localStorage.getItem('dropdown_BLUEBERRY');
+              var params = 'plain='+plain+'&strawberry='+straw+'&blueberry='+blue;
+              http.open('POST', "/pancake/order", true);
+              http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              http.send(params);
+          }
+
+    </script>
+     <button class ="placeorder" onclick=sendInfo();>PLACE ORDER</button>
     
     <!--img src="images/pancake-footer.png" alt="Footer Pancake" align="bottom" style="width:1460px;height:150px;"-->
      
