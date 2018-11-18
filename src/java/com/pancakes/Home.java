@@ -88,4 +88,26 @@ public class Home {
             return "Something went wrong" + e.getMessage();
         }
     }
+    @Path("/track")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveTrackingPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/tracking_page.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
+    @Path("/history")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String serveOrderHistoryPage( @CookieParam("session-cookie") Cookie cookie) {
+        try {
+            String sessionVal=cookie.getValue();
+            return htmlFileReader.readFile("src/resource/html/order_history_page.html",sessionVal);
+        } catch (Exception e) {
+            return "Something went wrong" + e.getMessage();
+        }
+    }
 }
