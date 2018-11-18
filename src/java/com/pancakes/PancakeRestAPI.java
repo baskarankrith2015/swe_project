@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class PancakeRestAPI {
     private HtmlFileReader htmlFileReader = new HtmlFileReader();
     private static DatabaseAccess databaseAccess= new DatabaseAccess();
+    ImageRendering imageRendering = new ImageRendering();
     LoginRestAPI loginRestAPI = new LoginRestAPI();
     private Session session=new Session();
     @POST
@@ -450,5 +451,17 @@ public class PancakeRestAPI {
         //STEP 6: Clean-up environment
         returnClass.close();
         return panCakeList;
+    }
+    @Path("/images/blueberries-1867398_1920.jpg")
+    @GET
+    @Produces("image/jpg")
+    public byte[] blueberry() {
+        try {
+            return imageRendering.getImage("blueberries-1867398_1920.jpg");
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong" + e.getMessage());
+        }
+        return null;
     }
 }
