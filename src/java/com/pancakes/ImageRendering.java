@@ -28,6 +28,19 @@ public class ImageRendering {
         }
         return null;
     }
+    @Path("/blueberries-1867398_1920.jpg")
+    @GET
+    @Produces("image/jpg")
+    public byte[] blueberry() {
+        try {
+            return getImage("blueberries-1867398_1920.jpg");
+
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong" + e.getMessage());
+        }
+        return null;
+    }
 
     public byte[] getImage(String relativePath) throws IOException {
         File file = new File("src/resource/html/images/"+relativePath);
