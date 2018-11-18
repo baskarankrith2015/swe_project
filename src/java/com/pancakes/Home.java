@@ -99,13 +99,13 @@ public class Home {
             return "Something went wrong" + e.getMessage();
         }
     }
-    @Path("/history")
+    @Path("/logout")
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String serveOrderHistoryPage( @CookieParam("session-cookie") Cookie cookie) {
+    public String serveLogoutPage( @CookieParam("session-cookie") Cookie cookie) {
         try {
-            String sessionVal=cookie.getValue();
-            return htmlFileReader.readFile("src/resource/html/order_history_page.html",sessionVal);
+            String sessionVal="";
+            return htmlFileReader.readFile("src/resource/html/thank_you_page.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
         }
