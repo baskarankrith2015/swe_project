@@ -27,7 +27,4 @@ public class CartRestAPI {
         return null;
     }
 
-    private void writeCart() {
-
-    }
 }

@@ -36,4 +36,22 @@ public class HtmlFileReader {
 
         return stringBuffer.toString();
     }
+
+    public String readFile(String fileName, String userCookie, String orderID) throws IOException {
+        File file = new File(fileName);
+        StringBuffer stringBuffer= new StringBuffer();
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        String st;
+        while ((st = br.readLine()) != null) {
+            if (st.contains("MARKER-COOKIE")) {
+                st = st.replace("MARKER-COOKIE", userCookie);
+            }
+            if (st.contains("MARKER-TRACKING-ID")) {
+                st = st.replace("MARKER-TRACKING-ID", orderID);
+            }
+            stringBuffer.append(st);
+        }
+        return stringBuffer.toString();
+    }
 }

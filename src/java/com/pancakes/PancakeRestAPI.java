@@ -66,7 +66,7 @@ public class PancakeRestAPI {
         order.setUserID(userId);
         writeOrder(order);
         try {
-            return htmlFileReader.readFile("src/resource/html/tracking_page.html",sessionVal);
+            return htmlFileReader.readFile("src/resource/html/tracking_page.html",sessionVal,order.getOrderID());
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
         }
@@ -214,6 +214,28 @@ public class PancakeRestAPI {
         System.out.println(sql);
         databaseAccess.runDatabaseQuery(sql);
 
+    }
+
+    public List<Order> getAllOrder(String userId) throws SQLException {
+
+        String sql="Select * from orders where user_id ="
+                +"\""+userId+"\""+";";
+        SqlReturnClass returnClass = databaseAccess.readDatabaseQuery(sql);
+        ResultSet rs=returnClass.getResultSet();
+        List<Order>orderList= new ArrayList<>();
+        while(rs.next()){
+            //Retrieve by column name
+            String userSId  = rs.getString("user_id");
+            String id = rs.getString("order_id");
+            String timestamp = rs.getString("creation_timestamp");
+            Order order= new Order(id);
+            order.setUserID(userSId);
+            order.setCreationTimestamp(Long.parseLong(timestamp));
+            orderList.add(order);
+        }
+        //STEP 6: Clean-up environment
+        returnClass.close();
+        return orderList;
     }
     public List<Order> getOrder(String orderId) throws SQLException {
         String sql="Select * from orders where order_id ="
