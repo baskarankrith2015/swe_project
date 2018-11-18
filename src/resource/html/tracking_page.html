@@ -359,9 +359,27 @@ th,td{
          
     <!--button type="button" onclick="loadDoc()">PLACE ORDER</button-->
      <p style="text-align: left; font-size: 200%; color: magenta; font-style: oblique; font-family: serif;">Please provide your order number at the counter in the restaurant to pick-up your order.<br></p>
-     <p>This is your TRACKING ID MARKER-TRACKING-ID</p>
+     <p style="text-align: left; font-size: 200%; color: magenta; font-style: oblique; font-family: serif;">To view your Tracking ID click down<b style = "color:cornsilk"></b></p>
+     <script>
+        function sendInfo() {
+          var http = new XMLHttpRequest();
+              http.open('GET', "/pancake/latest/orders/", false);
+              http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              http.send(null);
+              var  resp= http.responseText;
+             if(http.status == 200){
+                 var obj= JSON.parse(resp);
+                 var o=obj.orderID;
+                 console.log(o);
+                 document.getElementById("p1").innerHTML = o;
+              }
+          }
+     </script>
      <br>
      <br>
+     <button class ="editcartorder" onclick=sendInfo();>Show Tracking Info</button>
+    <p style="text-align: left; font-size: 200%; color: magenta; font-style: oblique; font-family: serif;"id="p1"><b style = "color:cornsilk"></b></p>
+     
      <!--p style="text-align: left; font-size: 200%; color: magenta; font-style: oblique; font-family: serif;">If you would like to Cancel your order:</p><br>
      <button class ="editcartorder" onclick="#">CANCEL ORDER</button-->
      

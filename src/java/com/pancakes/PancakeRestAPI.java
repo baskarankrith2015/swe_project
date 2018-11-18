@@ -164,7 +164,7 @@ public class PancakeRestAPI {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEntireOrderRestApi(
-            @CookieParam("session_cookie") Cookie cookie) {
+            @CookieParam("session-cookie") Cookie cookie) {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
@@ -177,6 +177,26 @@ public class PancakeRestAPI {
         return  Response.status(Response.Status.OK)
                 .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
                 .entity(orders)
+                .build();
+    }
+    @GET
+    @Path("/latest/orders/")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLatestOrderRestApi(
+            @CookieParam("session-cookie") Cookie cookie) {
+
+        String sessionVal=cookie.getValue();
+        String userId= session.getUserId(sessionVal);
+        List<Order> orders= new ArrayList<>();
+        try {
+            orders= getLatestOrder(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  Response.status(Response.Status.OK)
+                .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
+                .entity(orders.get(0))
                 .build();
     }
     @DELETE
@@ -239,7 +259,28 @@ public class PancakeRestAPI {
     public List<Order> getAllOrder(String userId) throws SQLException {
 
         String sql="Select * from orders where user_id ="
-                +"\""+userId+"\""+";";
+                +"\""+userId+"\""+"ORDER BY creation_timestamp;";
+        SqlReturnClass returnClass = databaseAccess.readDatabaseQuery(sql);
+        ResultSet rs=returnClass.getResultSet();
+        List<Order>orderList= new ArrayList<>();
+        while(rs.next()){
+            //Retrieve by column name
+            String userSId  = rs.getString("user_id");
+            String id = rs.getString("order_id");
+            String timestamp = rs.getString("creation_timestamp");
+            Order order= new Order(id);
+            order.setUserID(userSId);
+            order.setCreationTimestamp(Long.parseLong(timestamp));
+            orderList.add(order);
+        }
+        //STEP 6: Clean-up environment
+        returnClass.close();
+        return orderList;
+    }
+    public List<Order> getLatestOrder(String userId) throws SQLException {
+
+        String sql="Select * from orders where user_id ="
+                +"\""+userId+"\""+"ORDER BY creation_timestamp DESC limit 1;";
         SqlReturnClass returnClass = databaseAccess.readDatabaseQuery(sql);
         ResultSet rs=returnClass.getResultSet();
         List<Order>orderList= new ArrayList<>();
