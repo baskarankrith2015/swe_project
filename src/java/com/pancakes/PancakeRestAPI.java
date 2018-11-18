@@ -217,26 +217,31 @@ public class PancakeRestAPI {
                 .build();
     }
     @POST
-    @Path("/delete/{orderID}")
+    @Path("/delete")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(@PathParam("orderID") String orderUUID,
-                                    @CookieParam("session_cookie") Cookie cookie) {
+    @Produces(MediaType.TEXT_HTML)
+    public String delete(@FormParam("orderID") String orderUUID,
+                                    @CookieParam("session-cookie") Cookie cookie) {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
         deleteOrder(orderUUID);
-        return  Response.status(Response.Status.OK)
-                .cookie(new NewCookie("session_cookie",session.createCookie(userId)))
-                .entity("Order added")
-                .build();
+        try {
+            return htmlFileReader.readFile("src/resource/html/order_history_page.html",sessionVal);
+        } catch (Exception e) {
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong";
+            }
+        }
     }
     @DELETE
     @Path("/orders/{orderID}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteEntireOrderRestApi(@PathParam("orderID") String orderUUID,
-                                       @CookieParam("session_cookie") Cookie cookie) {
+                                       @CookieParam("session-cookie") Cookie cookie) {
 
         String sessionVal=cookie.getValue();
         String userId= session.getUserId(sessionVal);
@@ -274,15 +279,15 @@ public class PancakeRestAPI {
 
     }
     public void deletePancake(String pancakeID){
-        String sql="delete from pancake where pancake_id='"
-                +"\""+ pancakeID+";";
+        String sql="delete from pancake where pancake_id="
+                +"\""+ pancakeID+"\";";
         System.out.println(sql);
         databaseAccess.runDatabaseQuery(sql);
 
     }
     public void deleteOrder(String orderID){
-        String sql="delete from orders where order_id='"
-                +"\""+ orderID+";";
+        String sql="delete from orders where order_id="
+                +"\""+ orderID+"\";";
         System.out.println(sql);
         databaseAccess.runDatabaseQuery(sql);
 

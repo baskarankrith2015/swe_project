@@ -361,25 +361,7 @@ th,td{
      <h4 style="font-size: 200%; color: blanchedalmond; fantasy">Your cart contains:</h4>
      	<table id='check_out_cart'>
 	      	<script>
-	      	if(localStorage.getItem('dropdown_PLAIN')>0){
-				var table = document.getElementById("check_out_cart");
-				
-				var row = table.insertRow(0);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-	
-				cell1.innerHTML = 'Plain Pancakes';
-				cell2.innerHTML = localStorage.getItem('dropdown_PLAIN');
-			}if(localStorage.getItem('dropdown_STRAWBERRY')>0){
-				var table = document.getElementById("check_out_cart");
-				
-				var row = table.insertRow(0);
-				var cell1 = row.insertCell(0);
-				var cell2 = row.insertCell(1);
-	
-				cell1.innerHTML = 'Strawberry Pancakes';
-				cell2.innerHTML = localStorage.getItem('dropdown_STRAWBERRY');
-			}if(localStorage.getItem('dropdown_BLUEBERRY')>0){
+	      	if(localStorage.getItem('dropdown_BLUEBERRY')>0){
 				var table = document.getElementById("check_out_cart");
 				
 				var row = table.insertRow(0);
@@ -389,12 +371,32 @@ th,td{
 				cell1.innerHTML = 'Blueberry Pancakes';
 				cell2.innerHTML = localStorage.getItem('dropdown_BLUEBERRY');
 			}
+			if(localStorage.getItem('dropdown_STRAWBERRY')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Strawberry Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_STRAWBERRY');
+			}
+	      	if(localStorage.getItem('dropdown_PLAIN')>0){
+				var table = document.getElementById("check_out_cart");
+				
+				var row = table.insertRow(0);
+				var cell1 = row.insertCell(0);
+				var cell2 = row.insertCell(1);
+	
+				cell1.innerHTML = 'Plain Pancakes';
+				cell2.innerHTML = localStorage.getItem('dropdown_PLAIN');
+			}
 	      		
 			</script>
       	</table>
 	     
      <!-- reference to the menu page -->
-     <button class ="editcartorder" onclick="goBack()">Edit Cart</button>
+     <button class ="editcartorder" onclick="goBack()">EDIT CART</button>
     
     <br>
     <br>
@@ -428,7 +430,7 @@ th,td{
           }
 
     </script>
-     <button class ="addtocart" onclick=sendInfo();>Complete Order</button>
+     <button class ="addtocart" onclick=sendInfo();>COMPLETE ORDER</button>
     
     <!--img src="images/pancake-footer.png" alt="Footer Pancake" align="bottom" style="width:1460px;height:150px;"-->
      
