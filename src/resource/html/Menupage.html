@@ -220,7 +220,7 @@ th,td{
 
 .placeanorder{
 
-	 font-family: Calibri;
+    font-family: Calibri;
 	position: absolute;
     left : 70%;
     bottom: 1%;
@@ -313,12 +313,12 @@ th,td{
 
      </style>
  </head>
- <body> 
+ <body class="Page2"> 
      <script>
      document.cookie = "session-cookie=MARKER-COOKIE;path=/;"
      </script>
  	<header class ="Page1">
-      <h1><a style = "font-style: normal;color: white;" href ="main_page.html">Yummy Pancakes</a></h1>         
+      <h1><a style = "font-style: normal;color: white;" href ="/">Yummy Pancakes</a></h1>         
        <!-- <form>
           <input type = "Login" value = "User Login">
           <input type = "Login" value = "Admin Login">
@@ -326,10 +326,10 @@ th,td{
           <nav>
             <ul id = nav>
              <!-- <li><a href="#">LOGIN</a></li> -->
-              <li><a href="Menupage.html">MENU</a></li>
-              <li><a href="location_page.html">LOCATION</a></li>
+              <li><a href="/menu">MENU</a></li>
+              <li><a href="/location">LOCATION</a></li>
               <li><a href="tracking_page.html">TRACK ORDER</a></li>
-              <li><a href="cart_page.html">CART</a></li>
+              <li><a href="/carts">CART</a></li>
               <li><a href="order_history_page.html">ORDER HISTORY</a></li>
               <li><a href="/">LOG OUT</a></li>  
             </ul>  
@@ -360,7 +360,7 @@ th,td{
       </table> 
     <!-- <button type="button" onclick="httpGet('/order');">Click Me!</button>-->
     <form action="/user/order" method="GET">
-       <input type="submit" value="Order">
+       <input type="submit" class ="placeanorder" value="Click to Start Order">
         </form>
  </body>
 </html>
