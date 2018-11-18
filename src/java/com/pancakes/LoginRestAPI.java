@@ -40,8 +40,11 @@ public class LoginRestAPI {
         try {
             checkUser = readUser(userId);
         } catch (SQLException e) {
-            return "r";
-                   // Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong"+e1.getMessage();
+            }
         }
         if (checkUser == null) {
             createUser(userId, userName, password);
@@ -49,17 +52,21 @@ public class LoginRestAPI {
                 User newUser = readUser(userId);
                 return htmlFileReader.readFile("src/resource/html/Menupage.html",session.createCookie(newUser.getUserId()));
 
-            } catch (SQLException e) {
-                return "w";
-                //Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (SQLException | IOException e) {
+                try {
+                    return htmlFileReader.readFile("src/resource/html/error_page.html");
+                } catch (IOException e1) {
+                    return "Something Horribly went wrong"+e1.getMessage();
+                }
             }
         } else {
-           return  "q";
-                   //Response.status(Response.Status.UNAUTHORIZED).entity("User already exists").build();
+            try {
+                return htmlFileReader.readFile("src/resource/html/error_page.html");
+            } catch (IOException e1) {
+                return "Something Horribly went wrong"+e1.getMessage();
+            }
         }
-        return "Shit happened";
+
     }
     @POST
     @Path("/login")
@@ -82,7 +89,7 @@ public class LoginRestAPI {
             try {
                 return htmlFileReader.readFile("src/resource/html/error_page.html");
             } catch (IOException e1) {
-                return "Something Horribly went wrong";
+                return "Something Horribly went wrong"+e1.getMessage();
             }
 
         } else {
@@ -91,7 +98,7 @@ public class LoginRestAPI {
                 try {
                     return htmlFileReader.readFile("src/resource/html/error_page.html");
                 } catch (IOException e1) {
-                    return "Something Horribly went wrong";
+                    return "Something Horribly went wrong"+e1.getMessage();
                 }
             }
             else {
@@ -113,7 +120,7 @@ public class LoginRestAPI {
             try {
                 return htmlFileReader.readFile("src/resource/html/error_page.html");
             } catch (IOException e1) {
-                return "Something Horribly went wrong";
+                return "Something Horribly went wrong"+e1.getMessage();
             }
         }
         if (checkUser == null) {

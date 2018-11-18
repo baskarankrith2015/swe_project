@@ -151,7 +151,7 @@ public class Home {
     @Produces(MediaType.TEXT_HTML)
     public String historyPage( @CookieParam("session-cookie") Cookie cookie) {
         try {
-            String sessionVal="";
+            String sessionVal=cookie.getValue();
             return htmlFileReader.readFile("src/resource/html/order_history_page.html",sessionVal);
         } catch (Exception e) {
             return "Something went wrong" + e.getMessage();
